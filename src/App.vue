@@ -5,7 +5,7 @@
       <!-- 左侧主页图标 -->
       <el-col :lg="3" :md="4" :sm="8" :xl="1" :xs="8">
         <div class="grid-content">
-          <router-link to="/" tag="span">简历</router-link>
+          <router-link tag="span" to="/">简历</router-link>
         </div>
       </el-col>
       <!-- 中间的东西 -->
@@ -31,8 +31,8 @@
             </el-dropdown>
           </template>
           <template v-else>
-            <el-button type="primary" round @click="handleCommand('login')">登录</el-button>
-            <el-button type="success" round @click="handleCommand('register')">注册</el-button>
+            <el-button @click="handleCommand('login')" round type="primary">登录</el-button>
+            <el-button @click="handleCommand('register')" round type="success">注册</el-button>
           </template>
         </div>
       </el-col>
@@ -54,10 +54,10 @@ export default {
   methods: {
     // 编程式路由加载
     handleCommand(command) {
-      console.log(command)
-      this.$router.push(command)
+      // console.log(command)
+      this.$router.push({ name: command})
     }
-  },
+  }
 }
 </script>
 

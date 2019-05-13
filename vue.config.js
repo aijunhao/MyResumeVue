@@ -17,7 +17,7 @@ module.exports = {
     port: 8000,
     https: false,
     // 热更新
-    hotOnly: false
+    hotOnly: true
     // 跨域请求
     // proxy: {
     //   "http://127.0.0.1:3000/": {
