@@ -3,17 +3,17 @@
     <!-- 头部 -->
     <el-row class="row-bg" justify="space-between" type="flex">
       <!-- 左侧主页图标 -->
-      <el-col :lg="3" :md="4" :sm="8" :xl="1" :xs="8">
+      <el-col :lg="3" :md="3" :sm="6" :xl="8" :xs="10">
         <div class="grid-content">
           <router-link tag="span" to="/">简历</router-link>
         </div>
       </el-col>
       <!-- 中间的东西 -->
-      <el-col :lg="15" :md="14" :sm="8" :xl="1" :xs="8">
+      <el-col :lg="14" :md="14" :sm="8" :xl="4" :xs="0">
         <div class="grid-content hidden-sm-and-down">一堆我的简历一堆我的简历一堆我的简历一堆我的简历一堆我的简历一堆我的简历一堆我的简历</div>
       </el-col>
       <!-- 右侧账户 -->
-      <el-col :lg="4" :md="4" :sm="8" :xl="1" :xs="8">
+      <el-col :lg="5" :md="5" :sm="8" :xl="10" :xs="14">
         <div class="grid-content">
           <template v-if="isLogin">
             <div class="head-username">艾俊豪</div>
@@ -31,12 +31,69 @@
             </el-dropdown>
           </template>
           <template v-else>
-            <el-button @click="handleCommand('login')" round type="primary">登录</el-button>
-            <el-button @click="handleCommand('register')" round type="success">注册</el-button>
+            <el-button @click="dialogLoginFormVisible = true" round type="primary">登录</el-button>
+            <!-- <el-button @click="handleCommand('register')" round type="success">注册</el-button> -->
+            <el-button @click="dialogRegisterFormVisible = true" round type="success">注册</el-button>
           </template>
         </div>
       </el-col>
     </el-row>
+    <!-- 注册表单弹出框 -->
+    <el-dialog :visible.sync="dialogLoginFormVisible" center title="登录" width="450px">
+      <el-form
+        :model="ruleForm"
+        :rules="rules"
+        class="demo-ruleForm"
+        label-width="100px"
+        ref="ruleForm"
+        status-icon
+      >
+        <el-form-item label="邮箱" prop="email">
+          <el-input autocomplete="off" type="email" v-model="ruleForm.email"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="pass">
+          <el-input autocomplete="off" type="password" v-model="ruleForm.pass"></el-input>
+        </el-form-item>
+      </el-form>
+      <div class="dialog-footer" slot="footer">
+        <el-button @click="checkForm('ruleForm')" type="primary">登录</el-button>
+        <el-button @click="resetForm('ruleForm')">重置</el-button>
+      </div>
+    </el-dialog>
+    <!-- 登录表单弹出框 -->
+    <el-dialog :visible.sync="dialogRegisterFormVisible" center title="注册" width="450px">
+      <el-form
+        :model="ruleForm"
+        :rules="rules"
+        class="demo-ruleForm"
+        label-width="100px"
+        ref="ruleForm"
+        status-icon
+      >
+        <el-form-item label="邮箱" prop="email">
+          <el-input autocomplete="off" type="email" v-model="ruleForm.email"></el-input>
+        </el-form-item>
+        <el-form-item label="验证码" prop="code">
+          <el-col :span="13">
+            <el-input autocomplete="off" placeholder="请使用 1234" v-model="ruleForm.code"></el-input>
+          </el-col>
+          <el-col :span="1" class="line">&nbsp</el-col>
+          <el-col :span="10">
+            <el-button @click="sendCode()" style="width: 100%;" type="primary">获取验证码</el-button>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="密码" prop="pass">
+          <el-input autocomplete="off" type="password" v-model="ruleForm.pass"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码" prop="checkPass">
+          <el-input autocomplete="off" type="password" v-model="ruleForm.checkPass"></el-input>
+        </el-form-item>
+      </el-form>
+      <div class="dialog-footer" slot="footer">
+        <el-button @click="checkForm('ruleForm')" type="primary">提交</el-button>
+        <el-button @click="resetForm('ruleForm')">重置</el-button>
+      </div>
+    </el-dialog>
     <!-- 主体 -->
     <router-view></router-view>
   </div>
@@ -44,53 +101,117 @@
 
 <script>
 import 'element-ui/lib/theme-chalk/display.css'
+import { mapState } from 'vuex'
 
 export default {
   data() {
+    // 重复密码验证
+    var validatePass2 = (rule, value, callback) => {
+      if (value !== this.ruleForm.pass) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    }
     return {
-      isLogin: false
+      // 登录、注册表单显示
+      dialogLoginFormVisible: false,
+      dialogRegisterFormVisible: false,
+      // 表单内容
+      ruleForm: {
+        email: '',
+        pass: '',
+        checkPass: '',
+        code: ''
+      },
+      // 表单验证规则
+      rules: {
+        email: [
+          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+          {
+            type: 'email',
+            message: '请输入正确的邮箱地址',
+            trigger: 'blur'
+          }
+        ],
+        pass: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur' }
+        ],
+        checkPass: [
+          { required: true, message: '请再次输入密码', trigger: 'blur' },
+          {
+            min: 8,
+            max: 16,
+            message: '长度在 8 到 16 个字符',
+            trigger: 'blur'
+          },
+          { validator: validatePass2, trigger: 'blur' }
+        ],
+        code: [
+          { required: true, message: '请输入验证码', trigger: 'blur' },
+          { min: 4, max: 4, message: '您输入的验证码长度有误', trigger: 'blur' }
+        ]
+      }
     }
   },
   methods: {
     // 编程式路由加载
     handleCommand(command) {
       // console.log(command)
-      this.$router.push({ name: command})
+      this.$router.push({ name: command })
+    },
+    // 表单检查
+    checkForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          alert('submit!')
+          console.log(this.ruleForm)
+          this.register()
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    // 重置表单
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
+    },
+    // 表单提交并注册
+    register() {
+      this.$store.dispatch('register', {
+        email: this.ruleForm.email,
+        pass: this.ruleForm.pass
+      })
+    },
+    // 获取验证码
+    sendCode() {
+      this.$message({
+        message:
+          '验证码获取成功，请打开邮箱注意查收（暂未开通，请使用模拟验证码）',
+        type: 'success'
+      })
     }
-  }
+  },
+  computed: mapState(['isLogin'])
 }
 </script>
 
-<style>
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-  display: -webkit-flex;
-  justify-content: center;
-  align-items: center;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
-.el-dropdown-menu__item {
-  width: 100px;
-  text-align: center;
-}
-.head-username {
-  margin-right: 20px;
-}
-/* a { text-decoration: none}  */
+<style lang="stylus">.el-col
+  border-radius: 4px
+
+.row-bg
+  padding: 10px 0
+  background-color: #f9fafc
+
+  .grid-content
+    border-radius: 4px
+    min-height: 36px
+    display: -webkit-flex
+    justify-content: center
+    align-items: center
+
+.head-username
+  margin-right: 20px
 </style>
