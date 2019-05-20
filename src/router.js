@@ -4,14 +4,13 @@ import Home from "./views/Home.vue";
 import Setting from "./views/Setting.vue";
 import Member from "./views/Member.vue";
 import Feekback from "./views/Feedback.vue";
-import Login from "./views/Login.vue";
 import NewResume from "./views/NewResume.vue";
 
 Vue.use(Router);
 
 export default new Router({
-  // mode: "history",
-  // base: process.env.BASE_URL,
+  mode: "history",
+  base: process.env.BASE_URL,
   routes: [
     {
       path: "/",
@@ -36,11 +35,6 @@ export default new Router({
       path: "/feekback",
       component: Feekback,
       name: "feekback"
-    },
-    {
-      path: "/login",
-      component: Login,
-      name: "login"
     },
     {
       path: "/newresume",

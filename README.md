@@ -1,29 +1,34 @@
-# myresumevue
+<!-- TOC -->
 
-## Project setup
+- [项目介绍](#项目介绍)
+- [项目配置](#项目配置)
+    - [项目编译运行](#项目编译运行)
+    - [打包项目](#打包项目)
+    - [自定义配置](#自定义配置)
+
+<!-- /TOC -->
+
+## 项目介绍
+
+`MyResumeVue` 是 “我的简历” 网站设计的前端部分，项目整体采用 `Vue-Cli 3` 工具进行构建，使用 `Element-UI` 快速成型工具进行主要开发。
+
+## 项目配置
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 项目编译运行
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 打包项目
 ```
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
+### 自定义配置
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+见 [Vue-Cli](https://cli.vuejs.org/config/).

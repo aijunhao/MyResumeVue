@@ -6,32 +6,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    isLogin: false,
-    form: {
-      email: "",
-      pass: ""
-    }
-  },
-  getters: {
-    registerForm: state => state.form
+    isLogin: false
   },
   actions: {
-    register({ commit }, value) {
-      axios({
-        method: "post",
-        url: "http://127.0.0.1:3001/users/register",
-        data: value
-      })
-        .then(() => {
-          commit("updateForm", value);
-        })
-        .catch(() => {});
+    login: ({ commit }) => {
+      commit("LOGIN");
     }
   },
   mutations: {
-    updateForm(state, value) {
-      state.form.email = value.email;
-      state.form.pass = value.pass;
+    LOGIN(state) {
+      state.isLogin = true;
     }
   }
 });

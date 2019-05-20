@@ -11,7 +11,7 @@
     <div class="home-show">
       <el-carousel :interval="4000" height="600px" type="card">
         <el-carousel-item :key="item" v-for="item in demoPictures.length - 1">
-          <el-image :fit="fill" :src="demoPictures[item]" style="width: 100%; height: 100%"></el-image>
+          <el-image :fit="'fill'" :src="demoPictures[item]" style="width: 100%; height: 100%"></el-image>
         </el-carousel-item>
       </el-carousel>
     </div>

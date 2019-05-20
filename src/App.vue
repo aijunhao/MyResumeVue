@@ -100,6 +100,7 @@
 </template>
 
 <script>
+import config from './config.js'
 import 'element-ui/lib/theme-chalk/display.css'
 import { mapState } from 'vuex'
 
@@ -164,12 +165,10 @@ export default {
     // 表单检查
     checkForm(formName) {
       this.$refs[formName].validate(valid => {
-        if (valid) {
-          alert('submit!')
-          console.log(this.ruleForm)
+        if (valid && this.ruleForm.code === '1234') {
           this.register()
         } else {
-          console.log('error submit!!')
+          this.$message('提交错误...')
           return false
         }
       })
@@ -180,10 +179,33 @@ export default {
     },
     // 表单提交并注册
     register() {
-      this.$store.dispatch('register', {
-        email: this.ruleForm.email,
-        pass: this.ruleForm.pass
+      this.$message('正在访问服务器，请稍等...')
+      this.$axios({
+        method: 'post',
+        url: config.EXECUTE_USER_REGISTER,
+        data: {
+          email: this.ruleForm.email,
+          pass: this.ruleForm.pass
+        }
       })
+        .then(data => {
+          console.log(data)
+          if (data.status === 200) {
+            this.$message({
+              message: '账号注册成功！',
+              type: 'success'
+            })
+            this.dialogRegisterFormVisible = false
+            this.$store.dispatch('login')
+          } else if (data.status === 201) {
+            this.$message.error(
+              `对不起，邮箱：'${this.ruleForm.email}' 已被注册，请重试！`
+            )
+          } else {
+            this.$message.error('服务器繁忙，请稍后重试！')
+          }
+        })
+        .catch(err => console.log(err))
     },
     // 获取验证码
     sendCode() {
@@ -198,20 +220,24 @@ export default {
 }
 </script>
 
-<style lang="stylus">.el-col
-  border-radius: 4px
+<style lang="stylus">.el-col {
+  border-radius: 4px;
+}
 
-.row-bg
-  padding: 10px 0
-  background-color: #f9fafc
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
 
-  .grid-content
-    border-radius: 4px
-    min-height: 36px
-    display: -webkit-flex
-    justify-content: center
-    align-items: center
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
 
-.head-username
-  margin-right: 20px
+.head-username {
+  margin-right: 20px;
+}
 </style>
