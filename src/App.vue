@@ -16,7 +16,7 @@
       <el-col :lg="5" :md="5" :sm="8" :xl="10" :xs="14">
         <div class="grid-content">
           <template v-if="isLogin">
-            <div class="head-username">艾俊豪</div>
+            <div class="head-username">{{ User.User_Name }}</div>
             <!-- 账户下拉框，通过 handleCommand 方法来编程式导航 -->
             <el-dropdown @command="handleCommand">
               <span class="el-dropdown-link">
@@ -174,7 +174,10 @@ export default {
         case 'registerRuleForm':
           this.$refs[formName].validate(valid => {
             if (valid && this.registerRuleForm.code === '1234') {
-              this.register({ email: this.registerRuleForm.email, pass: this.registerRuleForm.pass})
+              this.register(
+                this.registerRuleForm.email,
+                this.registerRuleForm.pass
+              )
             } else {
               this.$message.error('提交错误，请正确填写注册信息!')
               return false
@@ -184,7 +187,7 @@ export default {
         case 'loginRuleForm':
           this.$refs[formName].validate(valid => {
             if (valid) {
-              this.login({ email: this.loginRuleForm.email, pass: this.loginRuleForm.pass})
+              this.login(this.loginRuleForm.email, this.loginRuleForm.pass)
             } else {
               this.$message.error('用户名或密码错误，请注意格式!')
               return false
@@ -195,24 +198,42 @@ export default {
           break
       }
     },
-    login({ email, pass }) {
-      console.log('登录成功')
-      // this.$axios({
-      //   method: 'post',
-      //   url: config.EXECUTE_USER_LOGIN,
-      //   data: {
-      //     email: email, 
-      //     pass: pass
-      //   }
-      // })
-      // this.$message('登录成功')
+    // 登录
+    login(email, pass) {
+      this.$axios({
+        method: 'post',
+        url: config.EXECUTE_USER_LOGIN,
+        data: {
+          email: email,
+          pass: pass
+        }
+      })
+        .then(results => {
+          console.log(results)
+          if (results.status === 200) {
+            this.$message({
+              message: `登录成功，欢迎您：${results.data.User_Name}`,
+              type: 'success'
+            })
+            this.dialogLoginFormVisible = false
+            this.$store.dispatch('login', {
+              User_Id: results.data.User_Id,
+              User_Name: results.data.User_Name
+            })
+          } else {
+            this.$message.error('用户名或密码错误，请重试！')
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     // 重置表单
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
     // 表单提交并注册
-    register({ email, pass }) {
+    register(email, pass) {
       this.$message('正在访问服务器，请稍等...')
       this.$axios({
         method: 'post',
@@ -230,14 +251,9 @@ export default {
               type: 'success'
             })
             this.dialogRegisterFormVisible = false
-            this.$store.dispatch('login', {
-              email: email,
-              pass: pass
-            })
+            this.login(email, pass)
           } else if (data.status === 201) {
-            this.$message.error(
-              `对不起，邮箱：'${email}' 已被注册，请重试！`
-            )
+            this.$message.error(`对不起，邮箱：'${email}' 已被注册，请重试！`)
           } else {
             this.$message.error('服务器繁忙，请稍后重试！')
           }
@@ -253,7 +269,7 @@ export default {
       })
     }
   },
-  computed: mapState(['isLogin'])
+  computed: mapState(['isLogin', 'User'])
 }
 </script>
 

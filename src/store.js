@@ -1,32 +1,28 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
-import config from "./config.js";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    isLogin: false
+    isLogin: false,
+    User: {
+      User_Id: "",
+      User_Name: "test"
+    }
   },
   actions: {
-    login: ({ commit }, value) => {
-      axios({
-        method: "post",
-        url: config.EXECUTE_USER_LOGIN,
-        data: value
-      }).then(data => {
-
-      }).catch(() => {
-
-      });
-      // console.log(value)
-      commit("LOGIN");
+    login: ({ commit }, values) => {
+      commit("LOGIN", values);
     }
   },
   mutations: {
-    LOGIN(state) {
+    LOGIN(state, values) {
       state.isLogin = true;
+      state.User = values;
+      // eslint-disable-next-line no-console
+      console.log(values);
     }
   }
 });
