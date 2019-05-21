@@ -16,7 +16,7 @@
       <el-col :lg="5" :md="5" :sm="8" :xl="10" :xs="14">
         <div class="grid-content">
           <template v-if="isLogin">
-            <div class="head-username">{{ User.User_Name }}</div>
+            <div class="head-username">{{ user.User_Name }}</div>
             <!-- 账户下拉框，通过 handleCommand 方法来编程式导航 -->
             <el-dropdown @command="handleCommand">
               <span class="el-dropdown-link">
@@ -164,7 +164,10 @@ export default {
   methods: {
     // 编程式路由加载
     handleCommand(command) {
-      // console.log(command)
+      if (command === 'logout') {
+        this.logout()
+        return
+      }
       this.$router.push({ name: command })
     },
     // 表单检查
@@ -211,12 +214,18 @@ export default {
         .then(results => {
           console.log(results)
           if (results.status === 200) {
+            // 登录成功
             this.$message({
               message: `登录成功，欢迎您：${results.data.User_Name}`,
               type: 'success'
             })
+            // 取消登录对话框
             this.dialogLoginFormVisible = false
-            this.$store.dispatch('login', {
+            // 将用户名和 ID 放入 sessionStorage
+            sessionStorage.setItem('User_Id', results.data.User_Id)
+            sessionStorage.setItem('User_Name', results.data.User_Name)
+            // 将用户名和 ID 放入 vuex
+            this.$store.dispatch('setUser', {
               User_Id: results.data.User_Id,
               User_Name: results.data.User_Name
             })
@@ -232,7 +241,7 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-    // 表单提交并注册
+    // 注册
     register(email, pass) {
       this.$message('正在访问服务器，请稍等...')
       this.$axios({
@@ -267,9 +276,36 @@ export default {
           '验证码获取成功，请打开邮箱注意查收（暂未开通，请使用模拟验证码）',
         type: 'success'
       })
+    },
+    // 退出
+    logout() {
+      this.$message('退出成功')
+      // 清空 sessionStorage
+      sessionStorage.setItem('User_Id', '')
+      sessionStorage.setItem('User_Name', '')
+      // 清空 vuex
+      this.$store.commit('SETUSER', null)
     }
   },
-  computed: mapState(['isLogin', 'User'])
+  computed: {
+    ...mapState(['user']),
+    isLogin() {
+      if (
+        sessionStorage.getItem('User_Name') &&
+        sessionStorage.getItem('User_Id')
+      ) {
+        console.log(sessionStorage.getItem('User_Id'))
+        // 将用户名和 ID 放入 vuex
+        this.$store.commit('SETUSER', {
+          User_Id: sessionStorage.getItem('User_Id'),
+          User_Name: sessionStorage.getItem('User_Name')
+        })
+      } else {
+        this.$store.commit('SETUSER', null)
+      }
+      return this.$store.getters.isLogin
+    }
+  }
 }
 </script>
 

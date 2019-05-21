@@ -7,22 +7,27 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isLogin: false,
-    User: {
+    user: {
       User_Id: "",
       User_Name: "test"
     }
   },
+  getters: {
+    isLogin: state => state.isLogin
+  },
   actions: {
-    login: ({ commit }, values) => {
-      commit("LOGIN", values);
+    setUser({ commit }, user) {
+      commit("SETUSER", user);
     }
   },
   mutations: {
-    LOGIN(state, values) {
-      state.isLogin = true;
-      state.User = values;
-      // eslint-disable-next-line no-console
-      console.log(values);
+    SETUSER(state, user) {
+      if (user) {
+        state.isLogin = true;
+      } else {
+        state.isLogin = false;
+      }
+      state.user = user;
     }
   }
 });
