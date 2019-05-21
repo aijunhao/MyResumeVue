@@ -23,7 +23,7 @@
                 <el-button circle icon="el-icon-user"></el-button>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="member">我的会员</el-dropdown-item>
+                <el-dropdown-item command="member">个人中心</el-dropdown-item>
                 <el-dropdown-item command="setting">账号设置</el-dropdown-item>
                 <el-dropdown-item command="feedback">问题反馈</el-dropdown-item>
                 <el-dropdown-item command="logout">退出账户</el-dropdown-item>
@@ -41,41 +41,41 @@
     <!-- 注册表单弹出框 -->
     <el-dialog :visible.sync="dialogLoginFormVisible" center title="登录" width="450px">
       <el-form
-        :model="ruleForm"
+        :model="loginRuleForm"
         :rules="rules"
         class="demo-ruleForm"
         label-width="100px"
-        ref="ruleForm"
+        ref="loginRuleForm"
         status-icon
       >
         <el-form-item label="邮箱" prop="email">
-          <el-input autocomplete="off" type="email" v-model="ruleForm.email"></el-input>
+          <el-input autocomplete="off" type="email" v-model="loginRuleForm.email"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
-          <el-input autocomplete="off" type="password" v-model="ruleForm.pass"></el-input>
+          <el-input autocomplete="off" type="password" v-model="loginRuleForm.pass"></el-input>
         </el-form-item>
       </el-form>
       <div class="dialog-footer" slot="footer">
-        <el-button @click="checkForm('ruleForm')" type="primary">登录</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
+        <el-button @click="checkForm('loginRuleForm')" type="primary">登录</el-button>
+        <el-button @click="resetForm('loginRuleForm')">重置</el-button>
       </div>
     </el-dialog>
     <!-- 登录表单弹出框 -->
     <el-dialog :visible.sync="dialogRegisterFormVisible" center title="注册" width="450px">
       <el-form
-        :model="ruleForm"
+        :model="registerRuleForm"
         :rules="rules"
         class="demo-ruleForm"
         label-width="100px"
-        ref="ruleForm"
+        ref="registerRuleForm"
         status-icon
       >
         <el-form-item label="邮箱" prop="email">
-          <el-input autocomplete="off" type="email" v-model="ruleForm.email"></el-input>
+          <el-input autocomplete="off" type="email" v-model="registerRuleForm.email"></el-input>
         </el-form-item>
         <el-form-item label="验证码" prop="code">
           <el-col :span="13">
-            <el-input autocomplete="off" placeholder="请使用 1234" v-model="ruleForm.code"></el-input>
+            <el-input autocomplete="off" placeholder="请使用 1234" v-model="registerRuleForm.code"></el-input>
           </el-col>
           <el-col :span="1" class="line">&nbsp</el-col>
           <el-col :span="10">
@@ -83,15 +83,15 @@
           </el-col>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
-          <el-input autocomplete="off" type="password" v-model="ruleForm.pass"></el-input>
+          <el-input autocomplete="off" type="password" v-model="registerRuleForm.pass"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPass">
-          <el-input autocomplete="off" type="password" v-model="ruleForm.checkPass"></el-input>
+          <el-input autocomplete="off" type="password" v-model="registerRuleForm.checkPass"></el-input>
         </el-form-item>
       </el-form>
       <div class="dialog-footer" slot="footer">
-        <el-button @click="checkForm('ruleForm')" type="primary">提交</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
+        <el-button @click="checkForm('registerRuleForm')" type="primary">注册</el-button>
+        <el-button @click="resetForm('registerRuleForm')">重置</el-button>
       </div>
     </el-dialog>
     <!-- 主体 -->
@@ -107,8 +107,8 @@ import { mapState } from 'vuex'
 export default {
   data() {
     // 重复密码验证
-    var validatePass2 = (rule, value, callback) => {
-      if (value !== this.ruleForm.pass) {
+    var validatePass = (rule, value, callback) => {
+      if (value !== this.registerRuleForm.pass) {
         callback(new Error('两次输入密码不一致!'))
       } else {
         callback()
@@ -118,12 +118,17 @@ export default {
       // 登录、注册表单显示
       dialogLoginFormVisible: false,
       dialogRegisterFormVisible: false,
-      // 表单内容
-      ruleForm: {
+      // 注册表单内容
+      registerRuleForm: {
         email: '',
         pass: '',
         checkPass: '',
         code: ''
+      },
+      // 登录表单内容
+      loginRuleForm: {
+        email: '',
+        pass: ''
       },
       // 表单验证规则
       rules: {
@@ -147,7 +152,7 @@ export default {
             message: '长度在 8 到 16 个字符',
             trigger: 'blur'
           },
-          { validator: validatePass2, trigger: 'blur' }
+          { validator: validatePass, trigger: 'blur' }
         ],
         code: [
           { required: true, message: '请输入验证码', trigger: 'blur' },
@@ -164,28 +169,57 @@ export default {
     },
     // 表单检查
     checkForm(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid && this.ruleForm.code === '1234') {
-          this.register()
-        } else {
-          this.$message('提交错误...')
-          return false
-        }
-      })
+      console.log(formName)
+      switch (formName) {
+        case 'registerRuleForm':
+          this.$refs[formName].validate(valid => {
+            if (valid && this.registerRuleForm.code === '1234') {
+              this.register({ email: this.registerRuleForm.email, pass: this.registerRuleForm.pass})
+            } else {
+              this.$message.error('提交错误，请正确填写注册信息!')
+              return false
+            }
+          })
+          break
+        case 'loginRuleForm':
+          this.$refs[formName].validate(valid => {
+            if (valid) {
+              this.login({ email: this.loginRuleForm.email, pass: this.loginRuleForm.pass})
+            } else {
+              this.$message.error('用户名或密码错误，请注意格式!')
+              return false
+            }
+          })
+          break
+        default:
+          break
+      }
+    },
+    login({ email, pass }) {
+      console.log('登录成功')
+      // this.$axios({
+      //   method: 'post',
+      //   url: config.EXECUTE_USER_LOGIN,
+      //   data: {
+      //     email: email, 
+      //     pass: pass
+      //   }
+      // })
+      // this.$message('登录成功')
     },
     // 重置表单
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
     // 表单提交并注册
-    register() {
+    register({ email, pass }) {
       this.$message('正在访问服务器，请稍等...')
       this.$axios({
         method: 'post',
         url: config.EXECUTE_USER_REGISTER,
         data: {
-          email: this.ruleForm.email,
-          pass: this.ruleForm.pass
+          email: email,
+          pass: pass
         }
       })
         .then(data => {
@@ -196,10 +230,13 @@ export default {
               type: 'success'
             })
             this.dialogRegisterFormVisible = false
-            this.$store.dispatch('login')
+            this.$store.dispatch('login', {
+              email: email,
+              pass: pass
+            })
           } else if (data.status === 201) {
             this.$message.error(
-              `对不起，邮箱：'${this.ruleForm.email}' 已被注册，请重试！`
+              `对不起，邮箱：'${email}' 已被注册，请重试！`
             )
           } else {
             this.$message.error('服务器繁忙，请稍后重试！')
@@ -220,24 +257,22 @@ export default {
 }
 </script>
 
-<style lang="stylus">.el-col {
-  border-radius: 4px;
-}
+<style lang="stylus">
+#app
+  .el-col
+    border-radius 4px
 
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
+  .row-bg
+    padding 10px 0
+    background-color #f9fafc
 
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-    display: -webkit-flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
+    .grid-content
+      border-radius 4px
+      min-height 36px
+      display -webkit-flex
+      justify-content center
+      align-items center
 
-.head-username {
-  margin-right: 20px;
-}
+  .head-username
+    margin-right 20px
 </style>

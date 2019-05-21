@@ -6,5 +6,7 @@ const BASE_URL = "http://127.0.0.1:3001";
 
 export default {
   // 用户注册
-  EXECUTE_USER_REGISTER: `${BASE_URL}/users/register`
+  EXECUTE_USER_REGISTER: `${BASE_URL}/users/register`,
+  // 用户登录
+  EXECUTE_USER_LOGIN: `${BASE_URL}/users/login`
 };
