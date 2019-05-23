@@ -10,7 +10,7 @@
       </el-col>
       <!-- 中间的东西 -->
       <el-col :lg="14" :md="14" :sm="8" :xl="4" :xs="0">
-        <div class="grid-content hidden-sm-and-down">一堆我的简历一堆我的简历一堆我的简历一堆我的简历一堆我的简历一堆我的简历一堆我的简历</div>
+        <div class="grid-content hidden-sm-and-down">一份好的简历，成就你的梦想</div>
       </el-col>
       <!-- 右侧账户 -->
       <el-col :lg="5" :md="5" :sm="8" :xl="10" :xs="14">

@@ -4,14 +4,14 @@
     <!-- 首页标题 -->
     <div class="home-title clearfix">
       <h1 class="home-main-title">技术精英都在用的在线简历</h1>
-      <h5 class="home-subtitle">百万人才使用的在线简历网站，帮你快速制作一份优秀的在线简历，出门在外再也不用担心简历不够了</h5>
-      <el-button style="font-size: 20px; margin-top: 5%;" type="danger">快速生成在线简历</el-button>
+      <h5 class="home-subtitle">百万人才使用的在线简历网站，帮你快速制作一份优秀的在线简历，再也不用担心简历 OUT 了</h5>
+      <el-button style="font-size: 20px; margin-top: 5%;" type="danger" @click="newResume()">快速生成在线简历</el-button>
     </div>
     <!-- 展示 -->
     <div class="home-show">
-      <el-carousel :interval="4000" height="600px" type="card">
+      <el-carousel :interval="4000" :height="carouselHeight+'px'" type="card">
         <el-carousel-item :key="item" v-for="item in demoPictures.length - 1">
-          <el-image :fit="'fill'" :src="demoPictures[item]" style="width: 100%; height: 100%"></el-image>
+          <img :src="demoPictures[item]" class="home-image" ref="homeShow"></img>
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -49,26 +49,46 @@
 </template>
 
 <script>
+import config from '../config.js'
+
 export default {
   data() {
     return {
+      carouselHeight: 600,
       demoPictures: [
-        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+        `${config.PUBLIC_IMAGES}/myresume.png`,
+        `${config.PUBLIC_IMAGES}/myresume.png`,
+        `${config.PUBLIC_IMAGES}/myresume.png`,
+        `${config.PUBLIC_IMAGES}/myresume.png`,
+        `${config.PUBLIC_IMAGES}/myresume.png`,
+        `${config.PUBLIC_IMAGES}/myresume.png`,
+        `${config.PUBLIC_IMAGES}/myresume.png`
       ]
     }
-  }
+  },
+  mounted() {
+    this.load()
+    window.addEventListener('resize', () => {
+      this.load()
+    })
+  },
+  methods: {
+    newResume() {
+      this.$message('假装进去了……网站开发中……')
+    },
+    load() {
+      this.$nextTick(() => {
+        this.carouselHeight = this.$refs.homeShow[0].width * 1.4
+        // console.log(this.$refs.homeShow[0].width)
+      })
+    }
+  },
 }
 </script>
 
 <style lang="stylus">
 #home
-  background-image url('../../public/background1.jpg')
+  background-image url('../../public/background.jpg')
   background-repeat no-repeat
   background-size 100%
 
@@ -99,20 +119,25 @@ export default {
 
   .home-show
     margin 30px auto
-    width 1000px
+    width 70%
+    min-width 400px
+    
+    .home-image 
+      width 100%
+      height 100%
 
-    .el-carousel__item h3
-      color #475669
-      font-size 14px
-      opacity 0.75
-      line-height 200px
-      margin 0
+    // .el-carousel__item h3
+    //   color #475669
+    //   font-size 14px
+    //   opacity 0.75
+    //   line-height 200px
+    //   margin 0
 
-    .el-carousel__item:nth-child(2n)
-      background-color #99a9bf
+    // .el-carousel__item:nth-child(2n)
+    //   background-color #99a9bf
 
-    .el-carousel__item:nth-child(2n + 1)
-      background-color #d3dce6
+    // .el-carousel__item:nth-child(2n + 1)
+    //   background-color #d3dce6
 
   .home-table
     margin 30px auto
@@ -123,4 +148,5 @@ export default {
     td
       width 100px
       color darkgray
+
 </style>
