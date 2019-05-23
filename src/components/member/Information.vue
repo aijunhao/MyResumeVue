@@ -1,43 +1,43 @@
 <template>
   <div id="information">
-    <el-form :model="form" label-width="80px" ref="form">
-      <el-form-item label="活动名称">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
-      <el-form-item label="活动时间">
-        <el-col :span="11">
-          <el-date-picker placeholder="选择日期" style="width: 100%;" type="date" v-model="form.date1"></el-date-picker>
-        </el-col>
-        <el-col :span="2" class="line">-</el-col>
-        <el-col :span="11">
-          <el-date-picker placeholder="选择日期" style="width: 100%;" type="date" v-model="form.date1"></el-date-picker>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="即时配送">
-        <el-switch v-model="form.delivery"></el-switch>
-      </el-form-item>
-      <el-form-item label="活动性质">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-          <el-checkbox label="地推活动" name="type"></el-checkbox>
-          <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-          <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="特殊资源">
-        <el-radio-group v-model="form.resource">
-          <el-radio label="线上品牌商赞助"></el-radio>
-          <el-radio label="线下场地免费"></el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="活动形式">
-        <el-input type="textarea" v-model="form.desc"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button @click="onSubmit" type="primary">立即创建</el-button>
-        <el-button>取消</el-button>
-      </el-form-item>
-    </el-form>
+    <div class="information-mine">
+      <h1 class="information-title">我的个人信息</h1>
+      <!-- 头像框 -->
+      <div class="head">
+        <el-upload
+        :before-upload="beforeAvatarUpload"
+        :on-success="handleAvatarSuccess"
+        :show-file-list="false"
+        action="http://127.0.0.1:3001/users/head"
+        class="avatar-uploader"
+      >
+        <img :src="imageUrl" class="avatar" v-if="imageUrl">
+        <i class="el-icon-plus avatar-uploader-icon" v-else></i>
+      </el-upload>
+      </div>
+      
+      <el-form :model="form" class="top" label-width="80px" ref="form">
+        <el-form-item label="姓名">
+          <el-input v-model="form.name"></el-input>
+        </el-form-item>
+        <el-form-item label="出生年月">
+          <el-date-picker placeholder="选择日期" style="width: 100%;" type="date" v-model="form.date"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="微信">
+          <el-input v-model="form.wechat"></el-input>
+        </el-form-item>
+        <el-form-item label="电话">
+          <el-input v-model="form.tel"></el-input>
+        </el-form-item>
+        <el-form-item label="博客">
+          <el-input v-model="form.blog"></el-input>
+        </el-form-item>
+        <el-form-item label="爱好">
+          <el-input v-model="form.hobby"></el-input>
+        </el-form-item>
+      </el-form>
+    </div>
+    <el-button type="danger" plain class="button">提交</el-button>
   </div>
 </template>
 
@@ -47,19 +47,33 @@ export default {
     return {
       form: {
         name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      }
+        date: '',
+        wechat: '',
+        tel: '',
+        blog: '',
+        hobby: ''
+      },
+      imageUrl: ''
     }
   },
   methods: {
     onSubmit() {
       console.log('submit!')
+    },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
     }
   }
 }
@@ -67,6 +81,48 @@ export default {
 
 <style lang="stylus">
 #information
-  width 500px
+  width 100%
   text-align left
+
+  .button 
+    margin 50px auto 
+
+  .information-title
+    font 20px
+    font-weight 200
+    margin-top 0
+
+  .information-mine
+    background white
+    border-radius 10px
+    padding 40px
+
+    .top
+      margin-top 20px
+
+    .head 
+      text-align center
+
+    .avatar-uploader .el-upload
+      border 1px dashed #d9d9d9
+      border-radius 6px
+      cursor pointer
+      position relative
+      overflow hidden
+
+    .avatar-uploader .el-upload:hover
+      border-color #409EFF
+
+    .avatar-uploader-icon
+      font-size 28px
+      color #8c939d
+      width 178px
+      height 240px
+      line-height 240px
+      text-align center
+
+    .avatar
+      width 178px
+      height 240px
+      display block
 </style>

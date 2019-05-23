@@ -1,39 +1,32 @@
 <template>
   <div id="member">
-    <el-container>
-      <!-- 左侧导航 -->
-      <el-aside>
-        <div class="member-info">
-          <!-- 头像上传框 -->
-          <el-upload
-            :before-upload="beforeAvatarUpload"
-            :on-success="handleAvatarSuccess"
-            :show-file-list="false"
-            action
-            class="avatar-uploader"
-          >
-            <img :src="imageUrl" class="avatar" v-if="imageUrl">
-            <i class="el-icon-plus avatar-uploader-icon" v-else></i>
-          </el-upload>
-          <h1 class="username">用户名</h1>
-        </div>
-      </el-aside>
-      <el-main>
-        <div>
-          <el-tabs @tab-click="handleClick" v-model="activeName">
-            <el-tab-pane label="总览" name="overview">
-              <overview></overview>
-            </el-tab-pane>
-            <el-tab-pane label="我的简历" name="my-resume">
-              <my-resume></my-resume>
-            </el-tab-pane>
-            <el-tab-pane label="信息管理" name="information">
-              <information></information>
-            </el-tab-pane>
-          </el-tabs>
-        </div>
-      </el-main>
-    </el-container>
+    <div class="member-info">
+      <!-- 头像上传框 -->
+      <el-upload
+        :before-upload="beforeAvatarUpload"
+        :on-success="handleAvatarSuccess"
+        :show-file-list="false"
+        action
+        class="avatar-uploader"
+      >
+        <img :src="imageUrl" class="avatar" v-if="imageUrl">
+        <i class="el-icon-plus avatar-uploader-icon" v-else></i>
+      </el-upload>
+      <h1 class="username">用户名</h1>
+    </div>
+    <div class="member-more">
+      <el-tabs @tab-click="handleClick" v-model="activeName">
+        <el-tab-pane label="总览" name="overview">
+          <overview></overview>
+        </el-tab-pane>
+        <el-tab-pane label="我的简历" name="my-resume">
+          <my-resume></my-resume>
+        </el-tab-pane>
+        <el-tab-pane label="信息管理" name="information">
+          <information></information>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
   </div>
 </template>
 
@@ -79,52 +72,51 @@ export default {
 
 <style lang="stylus">
 #member
-  margin 20px auto
-  width 1000px
+  display -webkit-flex
+  display flex
+  justify-content center
+  margin-top 40px
 
   .member-info
     background #fff
-    width 250px
-    height 300px
+    width 200px
+    height 240px
     border-radius 10px
     padding-top 20px
-
-  .username
-    font-size 18px
-    font-family '微软雅黑'
-    font-weight 200
-    margin-top 20px
-
-  .el-aside
-    color #333
     text-align center
-    width 250px
-    padding 20px 0
+    margin-right 10px
 
-  .el-main
-    color #333
-    text-align center
+    .username
+      font-size 18px
+      font-family '微软雅黑'
+      font-weight 200
+      margin-top 20px
 
-  .avatar-uploader .el-upload
-    border 1px dashed #d9d9d9
-    border-radius 6px
-    cursor pointer
-    position relative
-    overflow hidden
+    .avatar-uploader .el-upload
+      border 1px dashed #d9d9d9
+      border-radius 6px
+      cursor pointer
+      position relative
+      overflow hidden
 
-  .avatar-uploader .el-upload:hover
-    border-color #409EFF
+    .avatar-uploader .el-upload:hover
+      border-color #409EFF
 
-  .avatar-uploader-icon
-    font-size 28px
-    color #8c939d
-    width 200px
-    height 200px
-    line-height 200px
-    text-align center
+    .avatar-uploader-icon
+      font-size 28px
+      color #8c939d
+      width 150px
+      height 150px
+      line-height 150px
+      text-align center
 
-  .avatar
-    width 200px
-    height 200px
-    display block
+    .avatar
+      width 150px
+      height 150px
+      display block
+  
+  .member-more
+    margin-left 10px
+    margin-bottom 50px
+    width 50%
 </style>

@@ -38,7 +38,7 @@
         </div>
       </el-col>
     </el-row>
-    <!-- 注册表单弹出框 -->
+    <!-- 登录表单弹出框 -->
     <el-dialog :visible.sync="dialogLoginFormVisible" center title="登录" width="450px">
       <el-form
         :model="loginRuleForm"
@@ -52,7 +52,7 @@
           <el-input autocomplete="off" type="email" v-model="loginRuleForm.email"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
-          <el-input autocomplete="off" type="password" v-model="loginRuleForm.pass"></el-input>
+          <el-input autocomplete="off" type="password" v-model="loginRuleForm.pass" show-password></el-input>
         </el-form-item>
       </el-form>
       <div class="dialog-footer" slot="footer">
@@ -60,7 +60,7 @@
         <el-button @click="resetForm('loginRuleForm')">重置</el-button>
       </div>
     </el-dialog>
-    <!-- 登录表单弹出框 -->
+    <!-- 注册表单弹出框 -->
     <el-dialog :visible.sync="dialogRegisterFormVisible" center title="注册" width="450px">
       <el-form
         :model="registerRuleForm"
@@ -83,10 +83,10 @@
           </el-col>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
-          <el-input autocomplete="off" type="password" v-model="registerRuleForm.pass"></el-input>
+          <el-input autocomplete="off" type="password" v-model="registerRuleForm.pass" show-password></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPass">
-          <el-input autocomplete="off" type="password" v-model="registerRuleForm.checkPass"></el-input>
+          <el-input autocomplete="off" type="password" v-model="registerRuleForm.checkPass" show-password></el-input>
         </el-form-item>
       </el-form>
       <div class="dialog-footer" slot="footer">
