@@ -31,15 +31,15 @@
 </template>
 
 <script>
-import overview from '../components/member/Overview.vue'
-import information from '../components/member/Information.vue'
-import myresume from '../components/member/MyResume.vue'
+import overview from './Overview.vue'
+import information from './Information.vue'
+import myresume from './MyResume.vue'
 
 export default {
   data() {
     return {
       imageUrl: 'http://127.0.0.1:3001/public/images/1.jpg',
-      activeName: 'information'
+      activeName: 'overview'
     }
   },
   methods: {

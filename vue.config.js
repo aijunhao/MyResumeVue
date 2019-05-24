@@ -17,7 +17,7 @@ module.exports = {
     port: 8000,
     https: false,
     // 热更新
-    hotOnly: true
+    hotOnly: false
     // 跨域请求
     // proxy: {
     //   "http://127.0.0.1:3000/": {
@@ -30,5 +30,19 @@ module.exports = {
   // 第三方插件配置
   pluginOptions: {
     // ...
+  },
+  css: {
+    // 是否使用css分离插件 ExtractTextPlugin
+    extract: false,
+    // 开启 CSS source maps?
+    sourceMap: false,
+    // css预设器配置项
+    loaderOptions: {},
+    // 启用 CSS modules for all css / pre-processor files.
+    modules: false
+  },
+  chainWebpack: config => {
+    // 修复HMR
+    config.resolve.symlinks(true);
   }
 };

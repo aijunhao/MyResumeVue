@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Setting from "./views/Setting.vue";
-import Member from "./views/Member.vue";
+import Member from "./views/member/Member.vue";
 import Feekback from "./views/Feedback.vue";
 import NewResume from "./views/NewResume.vue";
 
