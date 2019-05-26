@@ -1,21 +1,21 @@
 <template>
   <div id="information">
-    <div class="information-mine">
+    <el-card class="information-mine top" shadow="hover">
       <h1 class="information-title">我的个人信息</h1>
       <!-- 头像框 -->
       <div class="head">
         <el-upload
-        :before-upload="beforeAvatarUpload"
-        :on-success="handleAvatarSuccess"
-        :show-file-list="false"
-        action="http://127.0.0.1:3001/users/head"
-        class="avatar-uploader"
-      >
-        <img :src="imageUrl" class="avatar" v-if="imageUrl">
-        <i class="el-icon-plus avatar-uploader-icon" v-else></i>
-      </el-upload>
+          :before-upload="beforeAvatarUpload"
+          :on-success="handleAvatarSuccess"
+          :show-file-list="false"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          class="avatar-uploader"
+        >
+          <img :src="imageUrl" class="avatar" v-if="imageUrl">
+          <i class="el-icon-plus avatar-uploader-icon" v-else></i>
+        </el-upload>
       </div>
-      
+
       <el-form :model="form" class="top" label-width="80px" ref="form">
         <el-form-item label="姓名">
           <el-input v-model="form.name"></el-input>
@@ -36,8 +36,9 @@
           <el-input v-model="form.hobby"></el-input>
         </el-form-item>
       </el-form>
-    </div>
-    <el-button type="danger" plain class="button">提交</el-button>
+    </el-card>
+    <div></div>
+    <el-button class="button" plain type="danger">提交</el-button>
   </div>
 </template>
 
@@ -83,25 +84,26 @@ export default {
 #information
   width 100%
   text-align left
+  padding 5px
 
-  .button 
-    margin 50px auto 
+  .button
+    margin 50px auto
 
   .information-title
     font 20px
     font-weight 200
     margin-top 0
 
+  .top
+    margin-top 10px
+
+  .head
+    text-align center
+
   .information-mine
     background white
     border-radius 10px
     padding 40px
-
-    .top
-      margin-top 20px
-
-    .head 
-      text-align center
 
     .avatar-uploader .el-upload
       border 1px dashed #d9d9d9

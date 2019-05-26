@@ -56,13 +56,13 @@ export default {
     return {
       carouselHeight: 600,
       demoPictures: [
-        `${config.PUBLIC_IMAGES}/myresume.png`,
-        `${config.PUBLIC_IMAGES}/myresume.png`,
-        `${config.PUBLIC_IMAGES}/myresume.png`,
-        `${config.PUBLIC_IMAGES}/myresume.png`,
-        `${config.PUBLIC_IMAGES}/myresume.png`,
-        `${config.PUBLIC_IMAGES}/myresume.png`,
-        `${config.PUBLIC_IMAGES}/myresume.png`
+        `${config.PUBLIC_IMAGES}/myresume.gif`,
+        `${config.PUBLIC_IMAGES}/myresume.gif`,
+        `${config.PUBLIC_IMAGES}/myresume.gif`,
+        `${config.PUBLIC_IMAGES}/myresume.gif`,
+        `${config.PUBLIC_IMAGES}/myresume.gif`,
+        `${config.PUBLIC_IMAGES}/myresume.gif`,
+        `${config.PUBLIC_IMAGES}/myresume.gif`
       ]
     }
   },
@@ -120,24 +120,24 @@ export default {
   .home-show
     margin 30px auto
     width 70%
-    min-width 400px
     
     .home-image 
       width 100%
       height 100%
+      min-height 300px
 
-    // .el-carousel__item h3
-    //   color #475669
-    //   font-size 14px
-    //   opacity 0.75
-    //   line-height 200px
-    //   margin 0
+    .el-carousel__item h3
+      color #475669
+      font-size 14px
+      opacity 0.75
+      line-height 200px
+      margin 0
 
-    // .el-carousel__item:nth-child(2n)
-    //   background-color #99a9bf
+    .el-carousel__item:nth-child(2n)
+      background-color #99a9bf
 
-    // .el-carousel__item:nth-child(2n + 1)
-    //   background-color #d3dce6
+    .el-carousel__item:nth-child(2n + 1)
+      background-color #d3dce6
 
   .home-table
     margin 30px auto

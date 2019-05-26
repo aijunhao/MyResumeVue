@@ -10,5 +10,7 @@ export default {
   // 用户登录
   EXECUTE_USER_LOGIN: `${BASE_URL}/users/login`,
   // 图片
-  PUBLIC_IMAGES: `${BASE_URL}/public/images`
+  PUBLIC_IMAGES: `${BASE_URL}/public/images`,
+  // 根路径
+  ROOT: `${BASE_URL}`,
 };

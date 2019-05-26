@@ -14,7 +14,7 @@ module.exports = {
     // 服务器地址
     host: "127.0.0.1",
     // 端口号
-    port: 8000,
+    port: 3002,
     https: false,
     // 热更新
     hotOnly: false
@@ -31,16 +31,16 @@ module.exports = {
   pluginOptions: {
     // ...
   },
-  css: {
-    // 是否使用css分离插件 ExtractTextPlugin
-    extract: false,
-    // 开启 CSS source maps?
-    sourceMap: false,
-    // css预设器配置项
-    loaderOptions: {},
-    // 启用 CSS modules for all css / pre-processor files.
-    modules: false
-  },
+  // css: {
+  //   // 是否使用css分离插件 ExtractTextPlugin
+  //   extract: true,
+  //   // 开启 CSS source maps?
+  //   sourceMap: false,
+  //   // css预设器配置项
+  //   loaderOptions: {},
+  //   // 启用 CSS modules for all css / pre-processor files.
+  //   modules: false
+  // },
   chainWebpack: config => {
     // 修复HMR
     config.resolve.symlinks(true);

@@ -1,19 +1,21 @@
 <template>
   <div id="member">
-    <div class="member-info">
-      <!-- 头像上传框 -->
-      <el-upload
-        :before-upload="beforeAvatarUpload"
-        :on-success="handleAvatarSuccess"
-        :show-file-list="false"
-        action
-        class="avatar-uploader"
-      >
-        <img :src="imageUrl" class="avatar" v-if="imageUrl">
-        <i class="el-icon-plus avatar-uploader-icon" v-else></i>
-      </el-upload>
-      <h1 class="username">用户名</h1>
-    </div>
+    <!-- <div class="member-info"> -->
+      <el-card shadow="hover" class="member-info">
+        <!-- 头像上传框 -->
+        <el-upload
+          :before-upload="beforeAvatarUpload"
+          :on-success="handleAvatarSuccess"
+          :show-file-list="false"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          class="avatar-uploader"
+        >
+          <img :src="imageUrl" class="avatar" v-if="imageUrl">
+          <i class="el-icon-plus avatar-uploader-icon" v-else></i>
+        </el-upload>
+        <h1 class="username">用户名</h1>
+      </el-card>
+    <!-- </div> -->
     <div class="member-more">
       <el-tabs @tab-click="handleClick" v-model="activeName">
         <el-tab-pane label="总览" name="overview">
@@ -34,11 +36,12 @@
 import overview from './Overview.vue'
 import information from './Information.vue'
 import myresume from './MyResume.vue'
+import config from '../../config.js'
 
 export default {
   data() {
     return {
-      imageUrl: 'http://127.0.0.1:3001/public/images/1.jpg',
+      imageUrl: `${config.PUBLIC_IMAGES}/1.jpg`,
       activeName: 'overview'
     }
   },
@@ -78,10 +81,8 @@ export default {
   margin-top 40px
 
   .member-info
-    background #fff
     width 200px
     height 240px
-    border-radius 10px
     padding-top 20px
     text-align center
     margin-right 10px
@@ -114,9 +115,9 @@ export default {
       width 150px
       height 150px
       display block
-  
+
   .member-more
     margin-left 10px
     margin-bottom 50px
-    width 50%
+    width 60%
 </style>
