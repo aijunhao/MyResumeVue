@@ -2,9 +2,15 @@
   <div id="comment-list">
     <!-- 查询头部 -->
     <div class="comment-list-header">
-      <input class="comment-select" placeholder="输入关键字查询" type="text">
-      <el-dropdown @command="handleCommand" split-button type="primary">
-        {{ select }}
+      <!-- <input class="comment-select" placeholder="输入关键字查询" type="text"> -->
+      <div class="comment-select">
+        <el-input placeholder="输入关键字查询" v-model="input"></el-input>
+      </div>
+      <el-dropdown @command="handleCommand">
+        <el-button type="primary">
+          {{ select }}
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="1">最新评论</el-dropdown-item>
           <el-dropdown-item command="2">最早评论</el-dropdown-item>
@@ -55,6 +61,7 @@ export default {
       select: '最新评论',
       total: 100,
       currentPage: 1,
+      input: '',
       comments: [
         {
           user_name: '玫瑰与剑匣',
@@ -107,17 +114,13 @@ export default {
 <style lang="stylus">
 #comment-list
   .comment-list-header
-    margin 20px 10px
+    margin 20px 5px
     display -webkit-flex
     display flex
     justify-content space-between
 
     .comment-select
-      border-radius 20px
-      padding 10px
-      line-height 10px
-      border 1px solid #ccc
-      color #ccc
+      max-width 150px
 
   .comment-list-body
     .comment-list

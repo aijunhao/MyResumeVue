@@ -5,13 +5,18 @@
     <div class="home-title clearfix">
       <h1 class="home-main-title">技术精英都在用的在线简历</h1>
       <h5 class="home-subtitle">百万人才使用的在线简历网站，帮你快速制作一份优秀的在线简历，再也不用担心简历 OUT 了</h5>
-      <el-button style="font-size: 20px; margin-top: 5%;" type="danger" @click="newResume()">快速生成在线简历</el-button>
+      <el-button
+        @click="newResume()"
+        style="font-size: 20px; margin-top: 5%;"
+        type="danger"
+      >快速生成在线简历</el-button>
     </div>
     <!-- 展示 -->
-    <div class="home-show">
-      <el-carousel :interval="4000" :height="carouselHeight+'px'" type="card">
+    <div class="home-show" ref="homeShow" id="homeShow">
+      <el-carousel :height="carouselHeight+'px'" :interval="4000" type="card">
         <el-carousel-item :key="item" v-for="item in demoPictures.length - 1">
-          <img :src="demoPictures[item]" class="home-image" ref="homeShow"></img>
+          <el-image :src="demoPictures[item]" style="width: 100%; height: 100%"></el-image>
+          <!-- <img :src="demoPictures[item]" style="height: 100% weight: 100%" ref="homeShow"></img> -->
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -67,22 +72,21 @@ export default {
     }
   },
   mounted() {
-    this.load()
+    this.homeCarouselLoad()
     window.addEventListener('resize', () => {
-      this.load()
+      this.homeCarouselLoad()
     })
   },
   methods: {
     newResume() {
-      this.$message('假装进去了……网站开发中……')
+      this.$message('网站开发中……')
     },
-    load() {
+    homeCarouselLoad() {
       this.$nextTick(() => {
-        this.carouselHeight = this.$refs.homeShow[0].width * 1.4
-        // console.log(this.$refs.homeShow[0].width)
+        this.carouselHeight = window.innerWidth * 0.5
       })
     }
-  },
+  }
 }
 </script>
 
@@ -120,8 +124,8 @@ export default {
   .home-show
     margin 30px auto
     width 70%
-    
-    .home-image 
+
+    .home-image
       width 100%
       height 100%
       min-height 300px
@@ -148,5 +152,4 @@ export default {
     td
       width 100px
       color darkgray
-
 </style>

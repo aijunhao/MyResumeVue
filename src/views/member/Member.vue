@@ -1,7 +1,8 @@
 <template>
   <div id="member">
-    <!-- <div class="member-info"> -->
-      <el-card shadow="hover" class="member-info">
+    <!-- 左侧头像卡片 -->
+    <div class="hidden-sm-and-down">
+      <el-card class="member-info" shadow="hover">
         <!-- 头像上传框 -->
         <el-upload
           :before-upload="beforeAvatarUpload"
@@ -15,7 +16,7 @@
         </el-upload>
         <h1 class="username">用户名</h1>
       </el-card>
-    <!-- </div> -->
+    </div>
     <div class="member-more">
       <el-tabs @tab-click="handleClick" v-model="activeName">
         <el-tab-pane label="总览" name="overview">
@@ -33,6 +34,7 @@
 </template>
 
 <script>
+import 'element-ui/lib/theme-chalk/display.css'
 import overview from './Overview.vue'
 import information from './Information.vue'
 import myresume from './MyResume.vue'
@@ -117,7 +119,7 @@ export default {
       display block
 
   .member-more
-    margin-left 10px
-    margin-bottom 50px
-    width 60%
+    margin 10px 10px 50px 10px
+    width 70%
+    min-width 350px
 </style>

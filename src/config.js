@@ -2,7 +2,7 @@
  * 封装网关域名及所有接口的方法名
  */
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "http://120.79.254.54:3001";
 
 export default {
   // 用户注册

@@ -37,7 +37,6 @@
         </el-form-item>
       </el-form>
     </el-card>
-    <div></div>
     <el-button class="button" plain type="danger">提交</el-button>
   </div>
 </template>
@@ -82,12 +81,11 @@ export default {
 
 <style lang="stylus">
 #information
-  width 100%
   text-align left
   padding 5px
 
   .button
-    margin 50px auto
+    margin-top 50px
 
   .information-title
     font 20px
@@ -102,8 +100,7 @@ export default {
 
   .information-mine
     background white
-    border-radius 10px
-    padding 40px
+    padding 10px
 
     .avatar-uploader .el-upload
       border 1px dashed #d9d9d9

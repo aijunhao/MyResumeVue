@@ -28,9 +28,8 @@ export default {
 <style lang="stylus">
 #feedback
   width 70%
-  min-width 400px
+  min-width 350px
   margin 0 auto
-  padding 5px
 
   .breadcrumb 
     margin 20px

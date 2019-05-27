@@ -311,6 +311,8 @@ export default {
 
 <style lang="stylus">
 #app
+  min-width 350px
+  
   .el-col
     border-radius 4px
 
