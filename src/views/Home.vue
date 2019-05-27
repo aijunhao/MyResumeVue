@@ -1,6 +1,6 @@
 <template>
+  <!-- 这是首页 -->
   <div id="home">
-    <!-- 这是首页 -->
     <!-- 首页标题 -->
     <div class="home-title clearfix">
       <h1 class="home-main-title">技术精英都在用的在线简历</h1>
@@ -11,12 +11,11 @@
         type="danger"
       >快速生成在线简历</el-button>
     </div>
-    <!-- 展示 -->
-    <div class="home-show" ref="homeShow" id="homeShow">
+    <!-- 展示轮播图 -->
+    <div class="home-carousel">
       <el-carousel :height="carouselHeight+'px'" :interval="4000" type="card">
         <el-carousel-item :key="item" v-for="item in demoPictures.length - 1">
           <el-image :src="demoPictures[item]" style="width: 100%; height: 100%"></el-image>
-          <!-- <img :src="demoPictures[item]" style="height: 100% weight: 100%" ref="homeShow"></img> -->
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -83,7 +82,7 @@ export default {
     },
     homeCarouselLoad() {
       this.$nextTick(() => {
-        this.carouselHeight = window.innerWidth * 0.5
+        this.carouselHeight = window.innerWidth * 0.5 > 220 ? window.innerWidth * 0.5 : 220
       })
     }
   }
@@ -121,14 +120,10 @@ export default {
       font-size 15px
       margin-top 10px
 
-  .home-show
+  .home-carousel
     margin 30px auto
-    width 70%
-
-    .home-image
-      width 100%
-      height 100%
-      min-height 300px
+    width 80%
+    min-width 350px
 
     .el-carousel__item h3
       color #475669

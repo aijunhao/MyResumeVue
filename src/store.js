@@ -28,6 +28,7 @@ export default new Vuex.Store({
         state.isLogin = false;
       }
       state.user = user;
+      // this.$message("退出成功");
     }
   }
 });
