@@ -82,7 +82,8 @@ export default {
     },
     homeCarouselLoad() {
       this.$nextTick(() => {
-        this.carouselHeight = window.innerWidth * 0.5 > 220 ? window.innerWidth * 0.5 : 220
+        this.carouselHeight =
+          window.innerWidth * 0.5 > 220 ? window.innerWidth * 0.5 : 220
       })
     }
   }

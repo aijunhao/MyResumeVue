@@ -105,7 +105,6 @@ export default {
 <style lang="stylus">
 #app
   min-width 350px
-  text-align center
 
   .el-col
     border-radius 4px
@@ -129,4 +128,5 @@ export default {
     line-height 60px
     font-size 14px
     background-color white
+    text-align center
 </style>

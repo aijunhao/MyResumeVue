@@ -1,15 +1,14 @@
 <template>
-  <div>
+  <div id="timeline">
     <div class="block">
       <el-timeline>
         <template v-for="time in timeline">
           <el-timeline-item :timestamp="time.start + ' - ' + time.end" placement="top">
             <el-card>
-              <h4>{{ time.title }}</h4>
-              <h5>{{ time.subtitle }}</h5>
-              <!-- <p>{{ time.content }}</p> -->
-              <ul v-for="con in time.content">
-                <li>{{ con }}</li>
+              <h4 class="timeline-title">{{ time.title }}</h4>
+              <h5 class="timeline-title">{{ time.subtitle }}</h5>
+              <ul>
+                <li v-for="con in time.content">{{ con }}</li>
               </ul>
             </el-card>
           </el-timeline-item>
@@ -24,3 +23,10 @@ export default {
   props: ['timeline']
 }
 </script>
+
+<style lang="stylus">
+#timeline
+  .timeline-title
+    margin 5px 0
+</style>
+

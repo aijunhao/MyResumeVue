@@ -4,7 +4,7 @@
     <div class="comment-list-header">
       <!-- <input class="comment-select" placeholder="输入关键字查询" type="text"> -->
       <div class="comment-select">
-        <el-input placeholder="输入关键字查询" v-model="input"></el-input>
+        <el-input placeholder="输入关键字查询" v-model="input" prefix-icon="el-icon-search"></el-input>
       </div>
       <el-dropdown @command="handleCommand">
         <el-button type="primary">

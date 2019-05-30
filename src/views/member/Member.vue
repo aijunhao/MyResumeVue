@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       imageUrl: `${config.PUBLIC_IMAGES}/1.jpg`,
-      activeName: 'overview'
+      activeName: 'information'
     }
   },
   methods: {
@@ -120,6 +120,6 @@ export default {
 
   .member-more
     margin 10px 10px 50px 10px
-    width 70%
+    width 60%
     min-width 350px
 </style>
