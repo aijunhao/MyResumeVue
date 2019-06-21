@@ -2,9 +2,8 @@
   <div id="comment-list">
     <!-- 查询头部 -->
     <div class="comment-list-header">
-      <!-- <input class="comment-select" placeholder="输入关键字查询" type="text"> -->
       <div class="comment-select">
-        <el-input placeholder="输入关键字查询" v-model="input" prefix-icon="el-icon-search"></el-input>
+        <el-input placeholder="输入关键字查询" prefix-icon="el-icon-search" v-model="input"></el-input>
       </div>
       <el-dropdown @command="handleCommand">
         <el-button type="primary">
@@ -19,8 +18,13 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <!-- 评论主体 -->
-    <div class="comment-list-body">
+    <!-- 评论主体，vue-infinite-scroll无限加载组件 -->
+    <div
+      class="comment-list-body"
+      infinite-scroll-disabled="busy"
+      infinite-scroll-distance="10"
+      v-infinite-scroll="loadMore"
+    >
       <ul class="comment-list">
         <li :key="i" v-for="(item, i) in comments">
           <div class="comment">
@@ -37,18 +41,6 @@
         </li>
       </ul>
     </div>
-    <!-- 分页 -->
-    <div class="comment-list-footer">
-      <el-pagination
-        :current-page.sync="currentPage"
-        :page-size="50"
-        :pager-count="5"
-        :total="total"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-        layout="total,prev, pager, next, jumper"
-      ></el-pagination>
-    </div>
   </div>
 </template>
 
@@ -58,10 +50,15 @@ import config from '../config.js'
 export default {
   data() {
     return {
+      // 查看类型
       select: '最新评论',
-      total: 100,
+      // 当前页码
       currentPage: 1,
+      // 无限滚动繁忙
+      busy: false,
+      // 输入查询
       input: '',
+      // 评论内容
       comments: [
         {
           user_name: '玫瑰与剑匣',
@@ -82,12 +79,6 @@ export default {
     }
   },
   methods: {
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`)
-    },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`)
-    },
     handleCommand(command) {
       this.$message(command)
       switch (command) {
@@ -106,6 +97,23 @@ export default {
         default:
           break
       }
+    },
+    // 加载更多
+    loadMore: function() {
+      // 开启繁忙模式
+      this.busy = true
+      setTimeout(() => {
+        // 添加一个新的
+        this.comments.push({
+          user_name: '玫瑰与剑匣',
+          img_url: `${config.PUBLIC_IMAGES}/1.jpg`,
+          content: '测试中，请勿打扰。',
+          time: new Date().toLocaleString(),
+          thumbs: 100
+        })
+        // 关闭繁忙模式
+        this.busy = false
+      }, 1000)
     }
   }
 }

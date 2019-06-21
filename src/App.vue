@@ -5,12 +5,22 @@
       <!-- 左侧主页图标 -->
       <el-col :lg="3" :md="3" :sm="6" :xl="8" :xs="10">
         <div class="grid-content">
-          <router-link tag="span" to="/">简历</router-link>
+          <router-link tag="span" to="/">
+            <img class="logo" src="./assets/myLogo.png">
+          </router-link>
         </div>
       </el-col>
       <!-- 中间的东西 -->
       <el-col :lg="14" :md="14" :sm="8" :xl="4" :xs="0">
-        <div class="grid-content hidden-sm-and-down">一份好的简历，成就你的梦想</div>
+        <div class="grid-content hidden-sm-and-down menu">
+          <span>网站介绍</span>
+          <el-divider direction="vertical"></el-divider>
+          <span>简历大厅</span>
+          <el-divider direction="vertical"></el-divider>
+          <router-link to="/forum">论坛中心</router-link>
+          <el-divider direction="vertical"></el-divider>
+          <router-link to="/aboutme">关于作者</router-link>
+        </div>
       </el-col>
       <!-- 右侧账户 -->
       <el-col :lg="5" :md="5" :sm="8" :xl="10" :xs="14">
@@ -20,7 +30,7 @@
             <!-- 账户下拉框，通过 handleCommand 方法来编程式导航 -->
             <el-dropdown @command="handleCommand">
               <span class="el-dropdown-link">
-                <img src="http://120.79.254.54:3001/public/images/1.jpg" class="head-img">
+                <img class="head-img" src="http://120.79.254.54:3001/public/images/1.jpg">
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="member">个人中心</el-dropdown-item>
@@ -59,7 +69,8 @@ import { mapState } from 'vuex'
 
 export default {
   components: {
-    login, register
+    login,
+    register
   },
   methods: {
     // 编程式路由加载
@@ -106,6 +117,16 @@ export default {
 #app
   min-width 350px
 
+  .logo
+    height 44px
+
+  .menu
+    height 48px
+
+    >a
+      text-decoration none
+      color #000
+
   .el-col
     border-radius 4px
 
@@ -124,8 +145,8 @@ export default {
     margin-right 20px
 
   .head-img
-    width 40px
-    height 40px
+    width 44px
+    height 44px
     border-radius 50%
 
   .app-footer

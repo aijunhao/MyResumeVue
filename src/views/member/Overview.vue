@@ -1,6 +1,6 @@
 <template>
   <div id="overview">
-    <el-card class="box-card top" shadow="hover">
+    <el-card shadow="hover">
       <h3>我的技能</h3>
       <echarts :option="option"></echarts>
     </el-card>

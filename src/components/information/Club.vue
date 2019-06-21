@@ -41,11 +41,11 @@
           v-for="index in newData.content.length"
         >
           <el-input placeholder="在团队中负责xx/做了xx事情" v-model="newData.content[index - 1]"></el-input>
-          <el-button @click.prevent="removeContent(index - 1)">删除</el-button>
+          <el-button @click.prevent="removeClubContent(index - 1)">删除</el-button>
         </el-form-item>
         <el-form-item>
           <el-button @click="addClubData()" type="warning">完成</el-button>
-          <el-button @click="addContent()">添加事件</el-button>
+          <el-button @click="addClubContent()">添加事件</el-button>
         </el-form-item>
       </el-form>
       <!-- 时间线 -->
@@ -85,12 +85,12 @@
                       v-model="timelineData[timelineIndex - 1].content[index - 1]"
                     ></el-input>
                   </div>
-                  <i @click="removeContent(index - 1, timelineIndex - 1)" class="el-icon-delete"></i>
+                  <i @click="removeClubContent(index - 1, timelineIndex - 1)" class="el-icon-delete"></i>
                 </div>
               </li>
             </ul>
             <el-button
-              @click="addContent(timelineIndex - 1)"
+              @click="addClubContent(timelineIndex - 1)"
               circle
               icon="el-icon-plus"
               type="warning"
@@ -171,7 +171,7 @@ export default {
      * index ！== null 有传参，表示在 timelineData 中的位置
      */
 
-    addContent(index = -1) {
+    addClubContent(index = -1) {
       if (index !== -1) {
         this.timelineData[index].content.push('')
         return
@@ -184,7 +184,7 @@ export default {
      * index2 选中的组织经历在 timelineData 中的位置
      * 如果 index2 不为 null 表示在表单中编辑，还未添加到 timelineData 中
      */
-    removeContent(index1, index2 = -1) {
+    removeClubContent(index1, index2 = -1) {
       if (index2 !== -1) {
         this.timelineData[index2].content.splice(index1, 1)
         return

@@ -45,5 +45,4 @@ export default {
 #information
   .information-box
     margin-bottom 10px
-    padding 10px
 </style>

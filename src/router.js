@@ -8,6 +8,8 @@ import NewResume from "./views/NewResume.vue";
 import Information from "./views/member/Information.vue";
 import MyResume from "./views/member/MyResume.vue";
 import Overview from "./views/member/Overview.vue";
+import Forum from "./views/Forum.vue";
+import AboutMe from "./views/AboutMe.vue";
 
 Vue.use(Router);
 
@@ -61,6 +63,16 @@ export default new Router({
       path: "/newresume",
       component: NewResume,
       name: "newresume"
+    },
+    {
+      path: "/forum",
+      component: Forum,
+      name: "forum"
+    },
+    {
+      path: "/aboutme",
+      component: AboutMe,
+      name: "aboutme"
     }
   ]
 });
