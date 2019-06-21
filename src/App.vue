@@ -20,7 +20,7 @@
             <!-- 账户下拉框，通过 handleCommand 方法来编程式导航 -->
             <el-dropdown @command="handleCommand">
               <span class="el-dropdown-link">
-                <el-button circle icon="el-icon-user"></el-button>
+                <img src="http://120.79.254.54:3001/public/images/1.jpg" class="head-img">
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="member">个人中心</el-dropdown-item>
@@ -122,6 +122,11 @@ export default {
 
   .head-username
     margin-right 20px
+
+  .head-img
+    width 40px
+    height 40px
+    border-radius 50%
 
   .app-footer
     height 60px

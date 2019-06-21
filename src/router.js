@@ -5,6 +5,9 @@ import Setting from "./views/Setting.vue";
 import Member from "./views/member/Member.vue";
 import Feedback from "./views/Feedback.vue";
 import NewResume from "./views/NewResume.vue";
+import Information from "./views/member/Information.vue";
+import MyResume from "./views/member/MyResume.vue";
+import Overview from "./views/member/Overview.vue";
 
 Vue.use(Router);
 
@@ -29,7 +32,25 @@ export default new Router({
     {
       path: "/member",
       component: Member,
-      name: "member"
+      name: "member",
+      redirect: "/member/overview",
+      children: [
+        {
+          path: "information",
+          component: Information,
+          name: "information"
+        },
+        {
+          path: "myresume",
+          component: MyResume,
+          name: "myresume"
+        },
+        {
+          path: "overview",
+          component: Overview,
+          name: "overview"
+        }
+      ]
     },
     {
       path: "/feedback",
@@ -40,6 +61,6 @@ export default new Router({
       path: "/newresume",
       component: NewResume,
       name: "newresume"
-    },
+    }
   ]
 });

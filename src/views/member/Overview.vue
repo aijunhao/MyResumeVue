@@ -91,10 +91,4 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-#overview
-  padding 5px
 
-  .top
-    margin-top 10px
-</style>

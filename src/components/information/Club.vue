@@ -1,105 +1,104 @@
 <template>
   <div id="clubInformation">
-    <el-card class="information-card" shadow="hover">
-      <!-- 标题及上传 -->
-      <div class="center information-header">
-        <h1 class="information-title">在校经历</h1>
-        <el-button type="success" :loading="upload" @click="clubUpload()">保存</el-button>      </div>
-      <div class="information-body">
-        <!-- 添加表单 -->
-        <el-form :model="newData" label-width="80px">
-          <el-form-item label="起始日期">
-            <el-col :span="11">
-              <el-date-picker
-                placeholder="开始日期"
-                style="width: 100%;"
-                type="month"
-                v-model="newData.start"
-                value-format="yyyy/MM"
-              ></el-date-picker>
-            </el-col>
-            <el-col :span="2" class="line">&nbsp</el-col>
-            <el-col :span="11">
-              <el-date-picker
-                placeholder="开始日期"
-                style="width: 100%;"
-                type="month"
-                v-model="newData.end"
-                value-format="yyyy/MM"
-              ></el-date-picker>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input placeholder="xx活动/xx部门" v-model="newData.title"></el-input>
-          </el-form-item>
-          <el-form-item label="我的职位">
-            <el-input placeholder="队长/部长/成员" v-model="newData.subtitle"></el-input>
-          </el-form-item>
-          <el-form-item
-            :key="index - 1"
-            :label="'事件' + index"
-            v-for="index in newData.content.length"
-          >
-            <el-input placeholder="在团队中负责xx/做了xx事情" v-model="newData.content[index - 1]"></el-input>
-            <el-button @click.prevent="removeContent(index - 1)">删除</el-button>
-          </el-form-item>
-          <el-form-item>
-            <el-button @click="addClubData()" type="warning">添加经历</el-button></el-button>
-            <el-button @click="addContent()">新增事件</el-button>
-          </el-form-item>
-        </el-form>
-        <!-- 时间线 -->
-        <el-timeline>
-          <el-timeline-item
-            :timestamp="timelineData[timelineIndex - 1].start + ' - ' + timelineData[timelineIndex - 1].end"
-            placement="top"
-            v-for="timelineIndex in timelineData.length"
-          >
-            <el-card>
-              <div class="center">
-                <div>
-                  <h4 class="timeline-title">{{ timelineData[timelineIndex - 1].title }}</h4>
-                  <h5 class="timeline-title">{{ timelineData[timelineIndex - 1].subtitle }}</h5>
-                </div>
-                <div>
-                  <el-button
-                    @click="removeClubData(timelineIndex - 1)"
-                    circle
-                    icon="el-icon-delete"
-                    type="danger"
-                  ></el-button>
-                </div>
+    <!-- 标题及上传 -->
+    <div class="center information-header">
+      <h1 class="information-title">在校经历</h1>
+      <el-button :loading="upload" @click="clubUpload()" type="success">保存</el-button>
+    </div>
+    <div class="information-body">
+      <!-- 添加表单 -->
+      <el-form :model="newData" label-width="80px">
+        <el-form-item label="起始年月">
+          <el-col :span="11">
+            <el-date-picker
+              placeholder="开始年月"
+              style="width: 100%;"
+              type="month"
+              v-model="newData.start"
+              value-format="yyyy/MM"
+            ></el-date-picker>
+          </el-col>
+          <el-col :span="2" class="line">&nbsp</el-col>
+          <el-col :span="11">
+            <el-date-picker
+              placeholder="结束年月"
+              style="width: 100%;"
+              type="month"
+              v-model="newData.end"
+              value-format="yyyy/MM"
+            ></el-date-picker>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="活动名称">
+          <el-input placeholder="xx活动/xx部门" v-model="newData.title"></el-input>
+        </el-form-item>
+        <el-form-item label="我的职位">
+          <el-input placeholder="队长/部长/成员" v-model="newData.subtitle"></el-input>
+        </el-form-item>
+        <el-form-item
+          :key="index - 1"
+          :label="'事件' + index"
+          v-for="index in newData.content.length"
+        >
+          <el-input placeholder="在团队中负责xx/做了xx事情" v-model="newData.content[index - 1]"></el-input>
+          <el-button @click.prevent="removeContent(index - 1)">删除</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="addClubData()" type="warning">完成</el-button>
+          <el-button @click="addContent()">添加事件</el-button>
+        </el-form-item>
+      </el-form>
+      <!-- 时间线 -->
+      <el-timeline>
+        <el-timeline-item
+          :timestamp="timelineData[timelineIndex - 1].start + ' - ' + timelineData[timelineIndex - 1].end"
+          placement="top"
+          v-for="timelineIndex in timelineData.length"
+        >
+          <el-card>
+            <div class="center">
+              <div>
+                <h4 class="timeline-title">{{ timelineData[timelineIndex - 1].title }}</h4>
+                <h5 class="timeline-title">{{ timelineData[timelineIndex - 1].subtitle }}</h5>
               </div>
-              <ul class="club-content-ul">
-                <li
-                  class="club-content-li"
-                  v-for="index in timelineData[timelineIndex - 1].content.length"
-                >
-                  <div class="club-content-box">
-                    <div class="club-content-main">
-                      <el-input
-                        autosize
-                        placeholder="在团队中负责xx/做了xx事情"
-                        resize="none"
-                        type="textarea"
-                        v-model="timelineData[timelineIndex - 1].content[index - 1]"
-                      ></el-input>
-                    </div>
-                    <i @click="removeContent(index - 1, timelineIndex - 1)" class="el-icon-delete"></i>
+              <div>
+                <el-button
+                  @click="removeClubData(timelineIndex - 1)"
+                  circle
+                  icon="el-icon-delete"
+                  type="danger"
+                ></el-button>
+              </div>
+            </div>
+            <ul class="club-content-ul">
+              <li
+                class="club-content-li"
+                v-for="index in timelineData[timelineIndex - 1].content.length"
+              >
+                <div class="club-content-box">
+                  <div class="club-content-main">
+                    <el-input
+                      autosize
+                      placeholder="在团队中负责xx/做了xx事情"
+                      resize="none"
+                      type="textarea"
+                      v-model="timelineData[timelineIndex - 1].content[index - 1]"
+                    ></el-input>
                   </div>
-                </li>
-              </ul>
-              <el-button
-                @click="addContent(timelineIndex - 1)"
-                circle
-                icon="el-icon-plus"
-                type="warning"
-              ></el-button>
-            </el-card>
-          </el-timeline-item>
-        </el-timeline>
-      </div>
-    </el-card>
+                  <i @click="removeContent(index - 1, timelineIndex - 1)" class="el-icon-delete"></i>
+                </div>
+              </li>
+            </ul>
+            <el-button
+              @click="addContent(timelineIndex - 1)"
+              circle
+              icon="el-icon-plus"
+              type="warning"
+            ></el-button>
+          </el-card>
+        </el-timeline-item>
+      </el-timeline>
+    </div>
   </div>
 </template>
 
@@ -167,10 +166,11 @@ export default {
       this.timelineData.push(this.newData)
     },
     /**
-     * 添加主要事件 
+     * 添加主要事件
      * index === null 没有传参，是在表单中添加事件
      * index ！== null 有传参，表示在 timelineData 中的位置
-     */ 
+     */
+
     addContent(index = -1) {
       if (index !== -1) {
         this.timelineData[index].content.push('')
@@ -184,7 +184,6 @@ export default {
      * index2 选中的组织经历在 timelineData 中的位置
      * 如果 index2 不为 null 表示在表单中编辑，还未添加到 timelineData 中
      */
-
     removeContent(index1, index2 = -1) {
       if (index2 !== -1) {
         this.timelineData[index2].content.splice(index1, 1)
@@ -202,37 +201,33 @@ export default {
 
 <style lang="stylus">
 #clubInformation
-  .information-card
-    padding 10px
-    margin-top 10px
+  .center
+    display -webkit-flex
+    display flex
+    justify-content space-between
+    align-items center
 
-    .center
-      display -webkit-flex
+  .information-header
+    margin-bottom 20px
+
+    .information-title
+      font 20px
+      font-weight 200
+      margin 0
+
+.club-content-ul
+  list-style none
+  padding 0
+
+  .club-content-li
+    margin 5px 0
+
+    .club-content-box
       display flex
       justify-content space-between
       align-items center
 
-    .information-header
-      margin-bottom 20px
-
-      .information-title
-        font 20px
-        font-weight 200
-        margin 0
-
-  .club-content-ul
-    list-style none
-    padding 0
-
-    .club-content-li
-      margin 5px 0
-
-      .club-content-box
-        display flex
-        justify-content space-between
-        align-items center
-
-        .club-content-main
-          width 100%
-          margin-right 5px
+      .club-content-main
+        width 100%
+        margin-right 5px
 </style>

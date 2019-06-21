@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     newResume() {
-      this.$message('网站开发中……')
+      this.$message('网站开发中……请注册登录后查看')
     },
     homeCarouselLoad() {
       this.$nextTick(() => {

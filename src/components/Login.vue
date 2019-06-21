@@ -12,10 +12,10 @@
         status-icon
       >
         <el-form-item label="邮箱" prop="email">
-          <el-input autocomplete="off" type="email" v-model="loginRuleForm.email"></el-input>
+          <el-input autocomplete="off" type="email" v-model="loginRuleForm.email" placeholder="测试账户：117@qq.com"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
-          <el-input autocomplete="off" show-password type="password" v-model="loginRuleForm.pass"></el-input>
+          <el-input autocomplete="off" show-password type="password" v-model="loginRuleForm.pass" placeholder="测试密码：123123123"></el-input>
         </el-form-item>
       </el-form>
       <div class="dialog-footer" slot="footer">

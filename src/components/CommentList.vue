@@ -30,7 +30,7 @@
               <p>{{ item.content }}</p>
               <div class="comment-content-footer">
                 <span>{{ item.time }}</span>
-                <span>{{ item.thumbs }}</span>
+                <span>{{ item.thumbs }} 人赞</span>
               </div>
             </div>
           </div>
@@ -126,9 +126,7 @@ export default {
     .comment-list
       padding 0px
       margin 0px
-
-      li
-        list-style none
+      list-style none
 
     .comment
       border-top 1px solid #ccc

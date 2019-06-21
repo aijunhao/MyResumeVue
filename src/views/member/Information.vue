@@ -1,15 +1,25 @@
 <template>
   <div id="information">
     <!-- 个人信息 -->
-    <person></person>
+    <el-card class="information-box" shadow="hover">
+      <person></person>
+    </el-card>
     <!-- 教育经历 -->
-    <education></education>
+    <el-card class="information-box" shadow="hover">
+      <education></education>
+    </el-card>
     <!-- 我的技能 -->
-    <ability></ability>
+    <el-card class="information-box" shadow="hover">
+      <ability></ability>
+    </el-card>
     <!-- 项目经验 -->
-    <project></project>
+    <el-card class="information-box" shadow="hover">
+      <project></project>
+    </el-card>
     <!-- 社团组织经验 -->
-    <club></club>
+    <el-card class="information-box" shadow="hover">
+      <club></club>
+    </el-card>
   </div>
 </template>
 
@@ -22,14 +32,18 @@ import ability from '../../components/information/Ability.vue'
 
 export default {
   components: {
-    person, education, project, club, ability
-  },
+    person,
+    education,
+    project,
+    club,
+    ability
+  }
 }
 </script>
 
 <style lang="stylus">
 #information
-  text-align left
-  padding 5px
-
+  .information-box
+    margin-bottom 10px
+    padding 10px
 </style>
