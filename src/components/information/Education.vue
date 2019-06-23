@@ -1,10 +1,11 @@
 <template>
   <div id="educationInformation">
     <!-- 标题及上传 -->
-    <div class="center information-header">
+    <div class="flex-box space-between information-header">
       <h1 class="information-title">教育经历</h1>
       <el-button :loading="upload" @click="educationUpload()" type="success">保存</el-button>
     </div>
+    <!-- 主体 -->
     <div class="information-body">
       <!-- 添加表单 -->
       <el-form :model="newEducation" label-width="80px">
@@ -58,6 +59,31 @@
           <el-button @click="addContent()">添加描述</el-button>
         </el-form-item>
       </el-form>
+      <!-- 已有内容显示 -->
+      <ul class="my-education-list">
+        <li :key="i" v-for="(education, i) in educationData">
+          <div class="flex-box space-between">
+            <strong class="school">{{ education.school }}</strong>
+            <span>{{ education.level }}</span>
+          </div>
+          <div class="flex-box space-between">
+            <span>{{ education.major }}</span>
+            <div>
+              <span class="time">{{ education.start }}</span>
+              -
+              <span class="time">{{ education.end }}</span>
+            </div>
+          </div>
+          <div class="achieve">
+            <strong>荣誉/奖项/竞赛：</strong>
+            <ul>
+              <li :key="i" v-for="(content, i) in education.content">{{content}}</li>
+            </ul>
+          </div>
+          <!-- 删除按钮 -->
+          <el-button type="danger" icon="el-icon-delete" circle @click="removeEducationData(i)"></el-button>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -116,6 +142,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * 数据保存
+     */
     educationUpload() {
       this.$message('保存成功')
     },
@@ -124,11 +153,10 @@ export default {
       this.educationData.push(this.newEducation)
     },
     /**
-     * 添加主要事件
+     * 添加表单中主要事件
      * index === null 没有传参，是在表单中添加事件
      * index ！== null 有传参，表示在 educationData 中的位置
      */
-
     addContent(index = -1) {
       if (index !== -1) {
         this.educationData[index].content.push('')
@@ -137,7 +165,7 @@ export default {
       this.newEducation.content.push('')
     },
     /**
-     * 删除描述
+     * 删除表单中主要事件
      * index1 事件在 content 中的位置
      * index2 选中的组织经历在 educationData 中的位置
      * 如果 index2 不为 null 表示在表单中编辑，还未添加到 educationData 中
@@ -148,6 +176,12 @@ export default {
         return
       }
       this.newEducation.content.splice(index1, 1)
+    },
+    /**
+     * 删除学历信息
+     */
+    removeEducationData(index) {
+      this.educationData.splice(index, 1)
     }
   }
 }
@@ -155,10 +189,14 @@ export default {
 
 <style lang="stylus">
 #educationInformation
-  .center
+  .flex-box
     display -webkit-flex
     display flex
+
+  .space-between
     justify-content space-between
+
+  .center
     align-items center
 
   .information-header
@@ -168,4 +206,22 @@ export default {
       font 20px
       font-weight 200
       margin 0
+
+  .my-education-list
+    margin 0
+    padding 0
+    list-style none
+
+    >li
+      border 1px solid #000
+      padding 10px
+      margin 5px 0
+      border-radius 5px
+
+      .school
+        font-size 20px
+
+      .time
+        font-size 12px
+
 </style>

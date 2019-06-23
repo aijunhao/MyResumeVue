@@ -93,8 +93,8 @@ export default {
      * 新建简历
      */
     newResume() {
-      this.$message('新建简历')
-    }
+      this.$router.push('/newresume')
+    },
   }
 }
 </script>

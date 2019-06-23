@@ -5,11 +5,7 @@
     <div class="home-title clearfix">
       <h1 class="home-main-title">技术精英都在用的在线简历</h1>
       <h5 class="home-subtitle">百万人才使用的在线简历网站，帮你快速制作一份优秀的在线简历，再也不用担心简历 OUT 了</h5>
-      <el-button
-        @click="newResume()"
-        style="font-size: 20px; margin-top: 5%;"
-        type="danger"
-      >快速生成在线简历</el-button>
+      <el-button @click="newResume()" class="new-resume" type="danger">快速生成在线简历</el-button>
     </div>
     <!-- 展示轮播图 -->
     <div class="home-carousel">
@@ -71,15 +67,22 @@ export default {
     }
   },
   mounted() {
+    // 当页面渲染完成时，重载轮播图大小
     this.homeCarouselLoad()
     window.addEventListener('resize', () => {
       this.homeCarouselLoad()
     })
   },
   methods: {
+    /**
+     * 进入创建页面
+     */
     newResume() {
-      this.$message('网站开发中……请注册登录后查看')
+      this.$router.push('/newresume')
     },
+    /**
+     * 轮播图重载
+     */
     homeCarouselLoad() {
       this.$nextTick(() => {
         this.carouselHeight =
@@ -105,6 +108,10 @@ export default {
   .home-title
     text-align center
     margin-bottom 5%
+
+    .new-resume
+      font-size 20px
+      margin-top 5%
 
     .home-main-title
       padding 0px

@@ -6,20 +6,6 @@
       <el-button :loading="upload" @click="personUpload()" type="success">保存</el-button>
     </div>
     <div class="information-body">
-      <!-- 头像框 -->
-      <div class="head">
-        <el-upload
-          :before-upload="beforeAvatarUpload"
-          :on-success="handleAvatarSuccess"
-          :show-file-list="false"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          class="avatar-uploader"
-        >
-          <img :src="imageUrl" class="avatar" v-if="imageUrl">
-          <i class="el-icon-plus avatar-uploader-icon" v-else></i>
-        </el-upload>
-      </div>
-
       <el-form :model="personalInformationForm" class="top" label-width="80px" ref="form">
         <el-form-item label="姓名">
           <el-input v-model="personalInformationForm.name"></el-input>
@@ -69,7 +55,8 @@
 export default {
   data() {
     return {
-      upload: true,
+      upload: false,
+      // 个人信息表单
       personalInformationForm: {
         name: '艾俊豪',
         date: '1998-06',
@@ -78,7 +65,6 @@ export default {
         blog: 'https://aijunhao.github.io/',
         hobby: ['宠物', '甜点']
       },
-      imageUrl: '',
       hobbyOptions: [
         {
           value: 'HTML',
@@ -98,21 +84,6 @@ export default {
   methods: {
     onSubmit() {
       console.log('submit!')
-    },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-      }
-      return isJPG && isLt2M
     },
     personUpload() {
       this.$message('保存成功')

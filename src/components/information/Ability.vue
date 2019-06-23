@@ -4,17 +4,18 @@
     <div class="center information-header">
       <div>
         <h1 class="information-title">我的技能</h1>
+        <span>显示模式：</span>
         <el-dropdown @command="handleCommand">
           <span class="el-dropdown-link">
-            {{ model }}
+            {{ modelName }}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="滑块模式">滑块模式</el-dropdown-item>
-            <el-dropdown-item command="水平进度条模式">水平进度条模式</el-dropdown-item>
-            <el-dropdown-item command="圆环进度条模式">圆环进度条模式</el-dropdown-item>
-            <el-dropdown-item command="柱状图">柱状图</el-dropdown-item>
-            <el-dropdown-item command="玫瑰图">玫瑰图</el-dropdown-item>
+            <el-dropdown-item command="0">滑块模式</el-dropdown-item>
+            <el-dropdown-item command="1">水平进度条模式</el-dropdown-item>
+            <el-dropdown-item command="2">圆环进度条模式</el-dropdown-item>
+            <el-dropdown-item command="3">柱状图</el-dropdown-item>
+            <el-dropdown-item command="4">玫瑰图</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -31,25 +32,25 @@
       </div>
       <div class="ability-box">
         <!-- 滑块模式 -->
-        <div v-if="model === '滑块模式'">
+        <div v-if="model === 0">
           <ul>
             <li :key="i" class="ability-slider-list-li" v-for="(ability, i) in abilities">
               <div class="center">
                 <span>{{ ability.name }}</span>
                 <i @click="abilityDelete(i)" class="el-icon-delete"></i>
               </div>
-              <el-slider :marks="marks" v-model="ability.level"></el-slider>
+              <el-slider :marks="marks" v-model="ability.value"></el-slider>
             </li>
           </ul>
         </div>
         <!-- 水平进度条模式 -->
-        <div v-else-if="model === '水平进度条模式'">
+        <div v-else-if="model === 1">
           <ul>
             <li :key="i" class="ability-horizon-list-li" v-for="(ability, i) in abilities">
               <div class="center">
                 <span class="ability-name">{{ ability.name }}</span>
                 <div class="ability-horizon-progress-box">
-                  <el-progress :percentage="ability.level" :stroke-width="18" :text-inside="true"></el-progress>
+                  <el-progress :percentage="ability.value" :stroke-width="18" :text-inside="true"></el-progress>
                 </div>
                 <i @click="abilityDelete(i)" class="el-icon-delete"></i>
               </div>
@@ -57,7 +58,7 @@
           </ul>
         </div>
         <!-- 圆环进度条模式 -->
-        <div v-else-if="model === '圆环进度条模式'">
+        <div v-else-if="model === 2">
           <ul>
             <li :key="i" class="ability-circle-list-li" v-for="(ability, i) in abilities">
               <div>
@@ -67,7 +68,7 @@
                 </div>
                 <div class="ability-circle-box-content">
                   <el-progress
-                    :percentage="ability.level"
+                    :percentage="ability.value"
                     :stroke-width="10"
                     :width="100"
                     type="circle"
@@ -77,28 +78,49 @@
             </li>
           </ul>
         </div>
+        <!-- 柱状图 -->
+        <div v-else-if="model === 3">
+          <echarts :list="abilities" :type="1"></echarts>
+        </div>
+        <!-- 玫瑰图 -->
+        <div v-else-if="model === 4">
+          <echarts :list="abilities" :type="0"></echarts>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import echarts from '../ECharts.vue'
+
 export default {
   data() {
     return {
+      // 上传
       upload: false,
-      model: '滑块模式',
+      // 显示模式
+      model: 4,
+      // 添加技能时的数值
       ability: '',
+      // 技能列表
       abilities: [
-        { level: 60, name: 'Vue' },
-        { level: 50, name: 'Node' },
-        { level: 40, name: 'Android' },
-        { level: 35, name: 'HTML5' },
-        { level: 45, name: 'ES6' },
-        { level: 35, name: 'CSS3' },
-        { level: 45, name: 'MySQL' },
-        { level: 40, name: 'MongoDB' }
+        { value: 60, name: 'Vue' },
+        { value: 50, name: 'Node' },
+        { value: 40, name: 'Android' },
+        { value: 35, name: 'HTML5' },
+        { value: 45, name: 'ES6' },
+        { value: 35, name: 'CSS3' },
+        { value: 45, name: 'MySQL' },
+        { value: 40, name: 'MongoDB' },
+        { value: 60, name: 'Vue-cli' },
+        { value: 50, name: 'Element' },
+        { value: 40, name: 'Echarts' },
+        { value: 35, name: 'BootStrap' },
+        { value: 45, name: 'Git' },
+        { value: 35, name: 'Vuex' }
       ],
+      // 滑块模式下的标注
       marks: {
         10: {
           style: {
@@ -134,32 +156,63 @@ export default {
     }
   },
   methods: {
+    /**
+     * 添加技能
+     */
     addAbility() {
       if (this.ability) {
-        this.abilities.push({ name: this.ability, level: 10 })
+        this.abilities.push({ name: this.ability, value: 10 })
         this.ability = ''
       } else {
         this.$message.error('请先输入技能名称')
       }
     },
-    abilityEdit() {
-      this.$message('编辑了')
-    },
+    /**
+     * 删除技能
+     */
     abilityDelete(index) {
       this.abilities.splice(index, 1)
     },
+    /**
+     * 上传
+     */
     abilityUpload() {
       this.$message('保存成功')
       console.log(this.abilities)
     },
+    /**
+     * 切换模式
+     */
     handleCommand(command) {
+      command = parseInt(command)
       this.model = command
       sessionStorage.setItem('abilityModel', command)
     }
   },
   mounted() {
+    /**
+     * 本地存储，待修改
+     */
     if (sessionStorage.getItem('abilityModel')) {
-      this.model = sessionStorage.getItem('abilityModel')
+      this.model = parseInt(sessionStorage.getItem('abilityModel'))
+    }
+  },
+  components: {
+    echarts
+  },
+  computed: {
+    modelName() {
+      if (this.model === 0) {
+        return '滑块模式'
+      } else if (this.model ===  1) {
+        return '水平进度条模式'
+      } else if (this.model === 2) {
+        return '圆环进度条模式'
+      } else if (this.model === 3) {
+        return '柱状图'
+      } else if (this.model === 4) {
+        return '玫瑰图'
+      }
     }
   }
 }
