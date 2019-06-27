@@ -156,7 +156,7 @@ export default {
         padding 5px
 
         > h1
-          font-size 16px
+          font-size 1rem
           margin 5px
 
         > p
@@ -166,7 +166,7 @@ export default {
           display flex
           display -webkit-flex
           justify-content space-between
-          font-size 12px
+          font-size 0.75rem
           margin 5px
           color #ccc
 

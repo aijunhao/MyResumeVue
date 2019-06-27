@@ -1,5 +1,5 @@
 <template>
-  <div id="myresume">
+  <span id="myresume">
     <!-- 头部 -->
     <div class="myresume-header flex-box horizontal-center space-between">
       <span>当前共有 {{ resumeList.length }} 份简历</span>
@@ -10,38 +10,42 @@
     <ul class="myresume-list">
       <li :key="i" v-for="(resume, i) in resumeList">
         <el-card shadow="hover">
-          <div class="flex-box flex-start">
+          <span class="flex-box flex-start">
             <!-- 左侧大图标 -->
             <div class="myresume-img-box flex-box horizontal-center vertical-center">
               <img src="../../assets/word.png">
             </div>
             <!-- 右侧描述内容 -->
-            <div class="myresume-box-main">
-              <h1 class="myresume-box-title">{{ resume.title }}</h1>
-              <div class="flex-box flex-start myresume-box-description">
-                <span class="myresume-level">{{ resume.level }}</span>
-                <span class="myresume-score">完整度:{{ resume.score }}%</span>
-                <span class="myresume-type">{{ resume.type }}</span>
+            <span class="myresume-box-main flex-box space-between">
+              <div>
+                <h1 class="myresume-box-title">{{ resume.title }}</h1>
+                <div class="flex-box flex-start myresume-box-description">
+                  <span class="myresume-level">{{ resume.level }}</span>
+                  <span class="myresume-score">完整度:{{ resume.score }}%</span>
+                  <span class="myresume-type">{{ resume.type }}</span>
+                </div>
               </div>
-              <div class="flex-box space-between myresume-box-bottom">
-                <span class="time">{{ resume.time }}</span>
-                <span class="myresume-box-icon">
-                  <i @click="myresumeEdit()" class="el-icon-edit"></i>
-                  <i @click="myresumeShare()" class="el-icon-share"></i>
-                  <i @click="myresumeDel(i)" class="el-icon-delete"></i>
+              <div>
+                <span class="flex-box space-between horizontal-center">
+                  <span class="time">{{ resume.time }}</span>
+                  <span class="myresume-box-icon">
+                    <i @click="myresumeEdit()" class="el-icon-edit"></i>
+                    <i @click="myresumeShare()" class="el-icon-share"></i>
+                    <i @click="myresumeDel(i)" class="el-icon-delete"></i>
+                  </span>
                 </span>
               </div>
-            </div>
-          </div>
+            </span>
+          </span>
         </el-card>
       </li>
     </ul>
 
     <!-- 新建简历 -->
-    <div class="flex-box myresume-footer">
-      <el-button type="danger" class="new-resume" @click="newResume()"><i class="el-icon-plus"/> 新建简历</el-button>
-    </div>
-  </div>
+    <el-button @click="newResume()" class="new-resume" type="danger">
+      <i class="el-icon-plus"/> 新建简历
+    </el-button>
+  </span>
 </template>
 
 <script>
@@ -94,12 +98,42 @@ export default {
      */
     newResume() {
       this.$router.push('/newresume')
-    },
+    }
   }
 }
 </script>
 
 <style lang="stylus">
+@media screen and (max-width: 960px)
+  .myresume-list
+    .myresume-img-box
+      height 68px
+      width 68px
+      min-width 70px
+
+      >img
+        height 45px
+        height 45px
+
+    .myresume-box-main
+      .myresume-box-title
+        font-size 1rem
+
+@media screen and (min-width: 1024px)
+  .myresume-list
+    .myresume-img-box
+      height 98px
+      width 98px
+      min-width 100px
+
+      >img
+        height 64px
+        height 64px
+
+    .myresume-box-main
+      .myresume-box-title
+        font-size 1.2rem
+
 #myresume
   .flex-box
     display flex
@@ -131,35 +165,26 @@ export default {
       margin 5px 0
 
       .myresume-img-box
-        height 98px
-        width 98px
-        min-width 100px
         border-radius 10px
         border 1px solid #bfbfbf
 
-        >img
-          height 64px
-          height 64px
-
       .myresume-box-main
         margin-left 15px
-        height 100px
         width 100%
+        flex-direction column
 
         .myresume-box-title
-          font-size 15px
           font-weight 600
           margin 0
 
         .myresume-box-description
-          margin-top 10px
+          margin-top 5px
 
           >span
             margin-right 3px
             padding 3px 5px
-            background-color yellow
             border-radius 4px
-            font-size 12px
+            font-size 0.75rem
 
           .myresume-level
             background-color #9CCDFF
@@ -170,23 +195,15 @@ export default {
           .myresume-type
             background-color #FFFC9E
 
-        .myresume-box-bottom
-          margin-top 25px
-          align-items center
+        .myresume-box-icon > i
+          margin-left 5px
 
-          .myresume-box-icon > i
-            margin-left 5px
+        .time
+          font-size 0.75rem
 
-          .time
-            font-size 12px
-
-  .myresume-footer
-    justify-content flex-end
-
-    .new-resume
-      margin-top 10px
-      width 250px
-      border-radius 10px
-      font-size 18px
-      line-height 18px
+  .new-resume
+    margin-top 10px
+    width 100%
+    border-radius 10px
+    font-size 1.125rem
 </style>

@@ -219,9 +219,11 @@ export default {
       border-radius 5px
 
       .school
-        font-size 20px
+        font-size 1.25rem
 
       .time
-        font-size 12px
+        font-size 0.75rem
 
+      .achieve 
+        padding-top 5px
 </style>

@@ -38,7 +38,7 @@ export default {
     width 97%
     margin 1% auto
     height 95px
-    font-size 14px
+    font-size 1rem
     border-radius 5px
     border none
     color #333
@@ -61,7 +61,7 @@ export default {
       background-color #656665
       border-radius 0 0 5px 0
       color #ffffff
-      font-size 16px
+      font-size 1rem
       border 0
       cursor pointer
 </style>

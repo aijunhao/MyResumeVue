@@ -3,7 +3,7 @@
   <div id="home">
     <!-- 首页标题 -->
     <div class="home-title clearfix">
-      <h1 class="home-main-title">技术精英都在用的在线简历</h1>
+      <h1 class="home-main-title">大家都在用的在线简历</h1>
       <h5 class="home-subtitle">百万人才使用的在线简历网站，帮你快速制作一份优秀的在线简历，再也不用担心简历 OUT 了</h5>
       <el-button @click="newResume()" class="new-resume" type="danger">快速生成在线简历</el-button>
     </div>
@@ -94,6 +94,21 @@ export default {
 </script>
 
 <style lang="stylus">
+// 媒体查询，兼容 pc 和移动端设备
+@media screen and (max-width: 960px)
+  .home-main-title
+    font-size 2rem
+
+  .home-subtitle
+    font-size 0.8rem
+@media screen and (min-width: 1024px)
+  .home-main-title
+    font-size 3rem
+
+  .home-subtitle
+    font-size 1rem
+    
+// 通用属性
 #home
   background-image url('../../public/background.jpg')
   background-repeat no-repeat
@@ -116,7 +131,6 @@ export default {
     .home-main-title
       padding 0px
       margin 0px
-      font-size 45px
       font-family '微软雅黑'
       margin-top 8%
 
@@ -125,7 +139,6 @@ export default {
       color #6f6f6f
       padding 0px
       margin 0px
-      font-size 15px
       margin-top 10px
 
   .home-carousel

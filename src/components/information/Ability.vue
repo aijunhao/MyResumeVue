@@ -253,7 +253,7 @@ export default {
 
       .ability-name
         width 100px
-        font-size 15px
+        font-size 1rem
         font-weight 200px
 
       .ability-slider-list-li
