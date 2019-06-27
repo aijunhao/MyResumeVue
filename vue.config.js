@@ -1,6 +1,6 @@
 module.exports = {
   // 基本路径配置，即原先的 baseUrl，默认是 '/'，打包会出错
-  publicPath: "./",
+  publicPath: "/",
   // 打包文件输出目录
   outputDir: "dist",
   // 打包之后静态资源的目录
